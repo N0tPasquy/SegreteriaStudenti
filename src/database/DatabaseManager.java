@@ -11,11 +11,19 @@ public class DatabaseManager {
 
     private DatabaseManager(){
         try{
+            // Forza il caricamento del driver SQLite
+            Class.forName("org.sqlite.JDBC");
+
+            // Crea/Connette il file segreteria.db nella root del progetto
             String url = "jdbc:sqlite:segreteria.db";
             connection = DriverManager.getConnection(url);
+
+            // Chiama la creazione delle tabelle
             creaTabelle();
         } catch (SQLException e){
             System.out.println("Errore di connessione a SQLite: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.err.println("ERRORE: Libreria SQLite non trovata nel Classpath!");
         }
     }
 
@@ -32,9 +40,9 @@ public class DatabaseManager {
 
     private void creaTabelle() {
         String sqlSegreteria = "CREATE TABLE IF NOT EXISTS Segreteria (" +
-                "ID INTEGER PRIMARY KEY AUTOINCREMENT " +
-                "Nome VARCHAR(50) NOT NULL," +
-                "Password VARCHAR(255) NOT NULL";
+                "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "Nome VARCHAR(50) NOT NULL, " +
+                "Password VARCHAR(255) NOT NULL)";
 
         String sqlDocente = "CREATE TABLE IF NOT EXISTS Docente (" +
                 "CF VARCHAR(16) PRIMARY KEY, " +
@@ -64,7 +72,7 @@ public class DatabaseManager {
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "Voto INTEGER, " +
                 "Stato VARCHAR(30) NOT NULL, " +
-                "Tipo VARCHAR(30) NOT NULL DEFAULR 'Scritto');";
+                "Tipo VARCHAR(30) NOT NULL DEFAULT 'Scritto');";
 
         String sqlAppello = "CREATE TABLE IF NOT EXISTS Appello (" +
                 "NomeCorso VARCHAR(255), " +
@@ -74,7 +82,7 @@ public class DatabaseManager {
                 "FOREIGN KEY (NomeCorso) REFERENCES Corso(Nome), " +
                 "PRIMARY KEY (NomeCorso, Data));";
 
-        String sqlTiene = "CREATE TABLE IF NOT EXISTS(" +
+        String sqlTiene = "CREATE TABLE IF NOT EXISTS Tiene (" +
                 "CFDocente VARCHAR(16), " +
                 "NomeCorso VARCHAR(255), " +
                 "FOREIGN KEY (CFDocente) REFERENCES Docente(CF), " +
@@ -96,5 +104,21 @@ public class DatabaseManager {
                 "FOREIGN KEY (DataAppello) REFERENCES Appello(Data), " +
                 "FOREIGN KEY (NomeCorso) REFERENCES Appello(NomeCorso), " +
                 "PRIMARY KEY (MatricolaStudente, DataAppello, NomeCorso));";
+
+        try(Statement stmt = connection.createStatement()){
+            stmt.execute(sqlSegreteria);
+            stmt.execute(sqlDocente);
+            stmt.execute(sqlCorso);
+            stmt.execute(sqlStudente);
+            stmt.execute(sqlEsito);
+            stmt.execute(sqlAppello);
+            stmt.execute(sqlTiene);
+            stmt.execute(sqlDeveSeguire);
+            stmt.execute(sqlSiPrenota);
+
+            System.out.println("Tabelle del database inizializzate con successo.");
+        } catch (SQLException e) {
+            System.err.println("Errore durante la creazione delle tabelle: " + e.getMessage());
+        }
     }
 }
