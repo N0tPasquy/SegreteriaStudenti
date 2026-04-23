@@ -68,19 +68,23 @@ public class DatabaseManager {
                 "ID INTEGER, " +
                 "FOREIGN KEY (ID) REFERENCES Segreteria(ID));";
 
+        String sqlAppello = "CREATE TABLE IF NOT EXISTS Appello (" +
+                "NomeCorso VARCHAR(255), " +
+                "Data DATE, " +
+                "FOREIGN KEY (NomeCorso) REFERENCES Corso(Nome), " +
+                "PRIMARY KEY (NomeCorso, Data));";
+
         String sqlEsito = "CREATE TABLE IF NOT EXISTS Esito (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "Voto INTEGER, " +
                 "Stato VARCHAR(30) NOT NULL, " +
-                "Tipo VARCHAR(30) NOT NULL DEFAULT 'Scritto');";
-
-        String sqlAppello = "CREATE TABLE IF NOT EXISTS Appello (" +
+                "Tipo VARCHAR(30) NOT NULL DEFAULT 'Scritto', " +
                 "NomeCorso VARCHAR(255), " +
                 "Data DATE, " +
-                "IDEsito INTEGER, " +
-                "FOREIGN KEY (IDEsito) REFERENCES Esito(ID), " +
-                "FOREIGN KEY (NomeCorso) REFERENCES Corso(Nome), " +
-                "PRIMARY KEY (NomeCorso, Data));";
+                "Matricola VARCHAR(10), " +
+                "FOREIGN KEY (NomeCorso) REFERENCES Appello(NomeCorso), " +
+                "FOREIGN KEY (Data) REFERENCES Appello(Data), " +
+                "FOREIGN KEY (Matricola) REFERENCES Studente(Matricola));";
 
         String sqlTiene = "CREATE TABLE IF NOT EXISTS Tiene (" +
                 "CFDocente VARCHAR(16), " +
