@@ -1,6 +1,7 @@
 package facade;
 
 import database.DatabaseManager;
+import eccezioni.AzioneNonPermessaException;
 import state.*;
 
 import java.sql.Connection;
@@ -77,12 +78,17 @@ public class StudenteFacade {
                     case "Verbalizzato": esito.setStato(new StatoVerbalizzato()); break;
                 }
 
-                // Provo ad eseguire l'azione richiesta
+                // Provo ad eseguire l'azione richiesta con la gestione dell'eccezione
                 String statoPrima = esito.getNomeStato(); // Salvo lo stato iniziale
-                if(accettaVoto){
-                    esito.accetta();
-                } else{
-                    esito.rifiuta();
+                try{
+                    if(accettaVoto){
+                        esito.accetta();
+                    } else{
+                        esito.rifiuta();
+                    }
+                } catch (eccezioni.AzioneNonPermessaException e) {
+                    // In futuro quando ci sara' la GUI gli passiamo il messaagio e.getMessage() mostrando un allert
+                    System.err.println("ECCEZIONE PERSONALIZZATA: " + e.getMessage());
                 }
 
                 // Se l'azione di prima ha modificato lo stato dell'oggetto aggiorno il db

@@ -1,14 +1,16 @@
 package state;
 
+import eccezioni.AzioneNonPermessaException;
+
 public class StatoAccettato implements StatoEsito {
     @Override
-    public void accetta(Esito esito){
-        System.out.println("Avviso: Il voto e' gia' stato accettato in precedenza.");
+    public void accetta(Esito esito)throws AzioneNonPermessaException{
+        throw new AzioneNonPermessaException("Operazione negata: Il voto e' gia' stato accettato in precedenza.");
     }
 
     @Override
-    public void rifiuta(Esito esito){
-        System.out.println("Errore: Non puoi piu' rifiutare il voto che hai gia' accettato.");
+    public void rifiuta(Esito esito) throws AzioneNonPermessaException{
+        throw new AzioneNonPermessaException("Operazione negata: Non puoi piu' rifiutare il voto che hai gia' accettato.");
     }
 
     /*  Quasi sicuramente questa parte e' da cambiare,

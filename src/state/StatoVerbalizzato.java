@@ -1,19 +1,21 @@
 package state;
 
+import eccezioni.AzioneNonPermessaException;
+
 public class StatoVerbalizzato implements StatoEsito {
     @Override
-    public void accetta(Esito esito){
-        System.out.println("Errore: Il voto e' gia' stato verbalizzato e non puo' essere piu' modificato.");
+    public void accetta(Esito esito) throws AzioneNonPermessaException{
+        throw new AzioneNonPermessaException("Operazione negata: Il voto e' gia' stato verbalizzato e non puo' essere piu' modificato.");
     }
 
     @Override
-    public void rifiuta(Esito esito){
-        System.out.println("Errore: Impossibile rifiutare un voto gia' presente nel libretto elettronico.");
+    public void rifiuta(Esito esito)throws AzioneNonPermessaException{
+        throw new AzioneNonPermessaException("Operazione negata: Impossibile rifiutare un voto gia' presente nel libretto elettronico.");
     }
 
     @Override
-    public void verbalizza(Esito esito){
-        System.out.println("Avviso: Questo voto risulta gia' verbalizzato ufficialmente,");
+    public void verbalizza(Esito esito) throws AzioneNonPermessaException{
+        throw new AzioneNonPermessaException("Operazione negata: Questo voto risulta gia' verbalizzato ufficialmente,");
     }
 
     @Override

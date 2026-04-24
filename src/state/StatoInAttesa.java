@@ -1,5 +1,7 @@
 package state;
 
+import eccezioni.AzioneNonPermessaException;
+
 public class StatoInAttesa implements StatoEsito {
     @Override
     public void accetta(Esito esito){
@@ -14,8 +16,8 @@ public class StatoInAttesa implements StatoEsito {
     }
 
     @Override
-    public void verbalizza(Esito esito){
-        System.out.println("Errore: Impossibile verbalizzare. Lo studente deve prima accettare il voto.");
+    public void verbalizza(Esito esito) throws AzioneNonPermessaException{
+        throw new AzioneNonPermessaException("Operazione negata: Impossibile verbalizzare. Lo studente deve prima accettare il voto.");
     }
 
     @Override

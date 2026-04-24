@@ -38,7 +38,7 @@ public class SegreteriaFacade {
 
     // Cambia piano di studi ad uno studente
     public void cambiaPianoStudi(String Matricola, String NomeCorso) {
-        String sql = "INSERT INTO Deve_seguire (Matricola, NomeCorso) VALUES (?, ?)";
+        String sql = "INSERT INTO DeveSeguire (MatricolaStudente, NomeCorso) VALUES (?, ?)";
         Connection conn = DatabaseManager.getInstance().getConnection();
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
