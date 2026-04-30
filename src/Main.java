@@ -37,7 +37,7 @@ public class Main extends Application {
             stmt.execute("INSERT OR IGNORE INTO Segreteria (ID, Nome, Password) VALUES (1, 'Segreteria Centrale', 'admin123')");
 
             // Inseriamo anche un Docente e un Corso per testare dopo le altre schermate
-            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome, ID) VALUES ('DOC123', 'passDoc', 'Mario', 'Verdi', 1)");
+            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome, ID) VALUES ('GLLLGU03T02A512D', '1234', 'Luigi', 'Galio', 1)");
             stmt.execute("INSERT OR IGNORE INTO Corso (Nome, CFU, Anno) VALUES ('Programmazione 3', 9, 2026)");
         } catch (Exception e) {
             System.err.println("Errore inserimento dati di default: " + e.getMessage());
