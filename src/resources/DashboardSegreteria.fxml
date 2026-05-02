@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SegreteriaController">
    <children>
-      <Label layoutX="234.0" layoutY="191.0" text="Benvenuta Segreteria" textAlignment="CENTER" />
+      <MenuButton layoutY="1.0" mnemonicParsing="false" text="Studenti">
+        <items>
+          <MenuItem fx:id="apriInserisciStudente" mnemonicParsing="false" text="Inserisci Studente" />
+            <MenuItem fx:id="apriVerbalizzaVoto" mnemonicParsing="false" text="Verbalizza Voto" />
+          <MenuItem fx:id="apriCambiaPianoStudi" mnemonicParsing="false" text="Cambia Piano Di Studi" />
+        </items>
+      </MenuButton>
+      <Button fx:id="cercaStudente" layoutX="274.0" layoutY="142.0" mnemonicParsing="false" onAction="#cercaStudente" text="Cerca" />
+      <RadioButton fx:id="radioMatricola" layoutX="260.0" layoutY="39.0" mnemonicParsing="false" text="Matricola" />
+      <RadioButton fx:id="radioNomeCognome" layoutX="238.0" layoutY="66.0" mnemonicParsing="false" text="Nome Cognome" />
+      <TextField fx:id="campoRicerca" layoutX="208.0" layoutY="103.0" prefHeight="26.0" prefWidth="186.0" promptText="Matricola / Nome Cognome" />
+      <TextArea fx:id="areaRisultati" editable="false" layoutY="203.0" prefHeight="198.0" prefWidth="600.0" />
    </children>
 </AnchorPane>

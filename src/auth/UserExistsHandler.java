@@ -3,6 +3,8 @@ package auth;
 import dao.AuthDAO;
 import model.CredenzialiDTO;
 
+import java.sql.SQLException;
+
 public class UserExistsHandler extends LoginHandler {
     private AuthDAO authDAO;
     private CredenzialiDTO utenteTrovato; // Salviamo l'utente per passarlo allo step successivo
@@ -12,7 +14,7 @@ public class UserExistsHandler extends LoginHandler {
     }
 
     @Override
-    public boolean handle(String Username, String PasswordInput){
+    public boolean handle(String Username, String PasswordInput) throws SQLException {
         utenteTrovato = authDAO.trovaUtente(Username);
 
         if(utenteTrovato == null){

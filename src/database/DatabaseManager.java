@@ -7,24 +7,10 @@ import java.sql.Statement;
 
 public class DatabaseManager {
     private static DatabaseManager instance;
-    private Connection connection;
+    private static final String URL = "jdbc:sqlite:segreteria.db";
 
     private DatabaseManager(){
-        try{
-            // Forza il caricamento del driver SQLite
-            Class.forName("org.sqlite.JDBC");
-
-            // Crea/Connette il file segreteria.db nella root del progetto
-            String url = "jdbc:sqlite:segreteria.db";
-            connection = DriverManager.getConnection(url);
-
-            // Chiama la creazione delle tabelle
-            creaTabelle();
-        } catch (SQLException e){
-            System.out.println("Errore di connessione a SQLite: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.err.println("ERRORE: Libreria SQLite non trovata nel Classpath!");
-        }
+        creaTabelle();
     }
 
     public static DatabaseManager getInstance(){
@@ -34,8 +20,9 @@ public class DatabaseManager {
         return instance;
     }
 
-    public Connection getConnection(){
-        return connection;
+    // Genera una nuova connessione ogni volta che viene chiamato!
+    public Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL);
     }
 
     private void creaTabelle() {
@@ -109,18 +96,19 @@ public class DatabaseManager {
                 "FOREIGN KEY (NomeCorso) REFERENCES Appello(NomeCorso), " +
                 "PRIMARY KEY (MatricolaStudente, DataAppello, NomeCorso));";
 
-        try(Statement stmt = connection.createStatement()){
-            stmt.execute(sqlSegreteria);
-            stmt.execute(sqlDocente);
-            stmt.execute(sqlCorso);
-            stmt.execute(sqlStudente);
-            stmt.execute(sqlEsito);
-            stmt.execute(sqlAppello);
-            stmt.execute(sqlTiene);
-            stmt.execute(sqlDeveSeguire);
-            stmt.execute(sqlSiPrenota);
+        try(Connection conn = getConnection();
+            Statement stmt = conn.createStatement()){
+                stmt.execute(sqlSegreteria);
+                stmt.execute(sqlDocente);
+                stmt.execute(sqlCorso);
+                stmt.execute(sqlStudente);
+                stmt.execute(sqlEsito);
+                stmt.execute(sqlAppello);
+                stmt.execute(sqlTiene);
+                stmt.execute(sqlDeveSeguire);
+                stmt.execute(sqlSiPrenota);
 
-            System.out.println("Tabelle del database inizializzate con successo.");
+                System.out.println("Tabelle del database inizializzate con successo.");
         } catch (SQLException e) {
             System.err.println("Errore durante la creazione delle tabelle: " + e.getMessage());
         }

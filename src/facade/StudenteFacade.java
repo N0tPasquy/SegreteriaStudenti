@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class StudenteFacade {
     // Funzione che permette di prenotarsi ad un appello
-    public void prenotaAppello(String Matricola, String NomeCorso, String DataAppello){
+    public void prenotaAppello(String Matricola, String NomeCorso, String DataAppello) throws SQLException {
         String sql = "INSERT INTO SiPrenota (MatricolaStudente, NomeCorso, DataAppello) VALUES (?, ?, ?)";
         Connection conn = DatabaseManager.getInstance().getConnection();
 
@@ -24,11 +24,13 @@ public class StudenteFacade {
             System.out.println("Studente " + Matricola + " prenotato con successo all'appello di " + NomeCorso + " del " + DataAppello);
         } catch (SQLException e) {
             System.err.println("Errore dutante la prenotazione (sei gia' prenotato?): " + e.getMessage());
+        } finally {
+            conn.close();
         }
     }
 
     // Visualizza il piano di studi
-    public void vediPianoStudi(String Matricola){
+    public void vediPianoStudi(String Matricola) throws SQLException {
         String sql = "SELECT C.Nome, C.CFU, C.Anno FROM DeveSeguire D JOIN Corso C ON D.NomeCorso = C.Nome WHERE D.MatricolaStudente = ?";
         Connection conn = DatabaseManager.getInstance().getConnection();
 
@@ -48,11 +50,13 @@ public class StudenteFacade {
             }
         } catch (SQLException e) {
             System.err.println("Errore caricamento piano di studi: " + e.getMessage());
+        } finally {
+            conn.close();
         }
     }
 
     // Metodo per accettare o rifiutare il voto di un esame, integrato con lo state pattern
-    public void gestisciVoto(int IDEsito, String Matricola, boolean accettaVoto) {
+    public void gestisciVoto(int IDEsito, String Matricola, boolean accettaVoto) throws SQLException {
         // Recupero l'esito dal db
         String sqlSelect = "SELECT Voto, Stato FROM Esito WHERE ID = ? AND Matricola = ?";
         Connection conn = DatabaseManager.getInstance().getConnection();
@@ -107,6 +111,8 @@ public class StudenteFacade {
             }
         } catch (SQLException e){
             System.err.println("Errore DB in gestisciVoto: " + e.getMessage());
+        } finally {
+            conn.close();
         }
     }
 }

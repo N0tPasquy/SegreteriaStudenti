@@ -5,11 +5,12 @@ import strategy.SearchStrategy;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class SegreteriaFacade {
 
     // Inseriamo un nuovo studente
-    public void iscriviStudente(String Matricola, String Password, String Nome, String Cognome, String Residenza) {
+    public void iscriviStudente(String Matricola, String Password, String Nome, String Cognome, String Residenza) throws SQLException {
         String sql = "INSERT INTO Studente (Matricola, Password, Nome, Cognome, Residenza) VALUES (?, ?, ?, ?, ?)";
 
         // Prendiamo la connessione FUORI dal try-with-resources
@@ -27,17 +28,20 @@ public class SegreteriaFacade {
             System.out.println("Successo: Studente " + Nome + " " + Cognome + " iscritto correttamente!");
         } catch (Exception e) {
             System.err.println("Errore durante l'iscrizione: La matricola potrebbe già esistere.");
+        } finally {
+            conn.close();
         }
     }
 
     // Ricercare uno studente usando lo Strategy Pattern
-    public void visualizzaStudente(SearchStrategy strategia, String inputDiRicerca){
+    public String visualizzaStudente(SearchStrategy strategia, String inputDiRicerca) throws SQLException {
         System.out.println("Ricerca in corso...");
-        strategia.cerca(inputDiRicerca);
+        System.out.println(inputDiRicerca);
+        return strategia.cerca(inputDiRicerca);
     }
 
-    // Cambia piano di studi ad uno studente
-    public void cambiaPianoStudi(String Matricola, String NomeCorso) {
+    // Cambia piano di studi a uno studente
+    public void cambiaPianoStudi(String Matricola, String NomeCorso) throws SQLException {
         String sql = "INSERT INTO DeveSeguire (MatricolaStudente, NomeCorso) VALUES (?, ?)";
         Connection conn = DatabaseManager.getInstance().getConnection();
 
@@ -48,6 +52,8 @@ public class SegreteriaFacade {
             System.out.println("Piano di studi aggiornato: Aggiunto " + NomeCorso + " allo studente " + Matricola);
         } catch (Exception e) {
             System.err.println("Errore aggiornamento piano studi (il corso esiste?).");
+        } finally {
+            conn.close();
         }
     }
 }

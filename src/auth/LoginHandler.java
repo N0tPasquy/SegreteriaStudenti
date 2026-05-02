@@ -1,5 +1,7 @@
 package auth;
 
+import java.sql.SQLException;
+
 public class LoginHandler {
     private LoginHandler nextHandler;
 
@@ -10,7 +12,7 @@ public class LoginHandler {
     }
 
     // Il metodo che ogni handler implementera'
-    public boolean handle(String Username, String PasswordInput){
+    public boolean handle(String Username, String PasswordInput) throws SQLException {
         if(nextHandler != null){
             return nextHandler.handle(Username, PasswordInput);
         }

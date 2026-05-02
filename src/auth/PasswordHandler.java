@@ -2,6 +2,8 @@ package auth;
 
 import model.CredenzialiDTO;
 
+import java.sql.SQLException;
+
 public class PasswordHandler extends LoginHandler{
     private UserExistsHandler prevHandler; // Ci serve per recuperare l'utente trovato nello step prima
 
@@ -10,7 +12,7 @@ public class PasswordHandler extends LoginHandler{
     }
 
     @Override
-    public boolean handle(String username, String passwordInput) {
+    public boolean handle(String username, String passwordInput) throws SQLException {
         CredenzialiDTO utente = prevHandler.getUtenteTrovato();
 
         // Confronto base (per l'esame si potrebbe fare con l'hashing, ma partiamo semplici)

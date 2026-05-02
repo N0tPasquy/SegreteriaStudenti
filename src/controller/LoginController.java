@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import javax.accessibility.AccessibleValue;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class LoginController {
 
@@ -28,7 +29,7 @@ public class LoginController {
 
     // Metodo che verra' richiamato quando si clicca il pulsante Accedi
     @FXML
-    public void gestisciLogin(ActionEvent event){
+    public void gestisciLogin(ActionEvent event) throws SQLException {
         String Username = UsernameField.getText();
         String Password = PasswordField.getText();
 

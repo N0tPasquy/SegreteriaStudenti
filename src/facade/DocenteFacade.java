@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class DocenteFacade {
     // Inserisce un nuovo appello nel db
-    public void creaAppello(String NomeCorso, String Data){
+    public void creaAppello(String NomeCorso, String Data) throws SQLException {
         String sql = "INSERT INTO Appello (NomeCorso, Data) VALUES (?, ?)";
         Connection conn = DatabaseManager.getInstance().getConnection();
 
@@ -20,11 +20,13 @@ public class DocenteFacade {
             System.out.println("Appello creato con successo per il corso di " + NomeCorso + " in data " + Data);
         } catch (SQLException e) {
             System.out.println("Errore durante la creazione dell'appello (esiste gia'?): " + e.getMessage());
+        } finally {
+            conn.close();
         }
     }
 
     // Visualizza la lista degli studenti prenotati tramite una JOIN
-    public void visualizzaPrenotati(String NomeCorso, String DataAppello){
+    public void visualizzaPrenotati(String NomeCorso, String DataAppello) throws SQLException {
         String sql = "SELECT S.Matricola, S.Nome, S.Cognome " +
                 "FROM Studente S " +
                 "JOIN SiPrenota P ON S.Matricola = P.MatricolaStudente " +
@@ -49,10 +51,12 @@ public class DocenteFacade {
             }
         } catch (SQLException e) {
             System.out.println("Errore durante il recupero delle prenotazioni: " + e.getMessage());
+        } finally {
+            conn.close();
         }
     }
 
-    public void inserisciVoto(String Matricola, String NomeCorso, String DataAppello, int Voto, boolean assente){
+    public void inserisciVoto(String Matricola, String NomeCorso, String DataAppello, int Voto, boolean assente) throws SQLException {
         String sql = "INSERT INTO Esito (Voto, Stato, Tipo, Matricola, NomeCorso, Data) VALUES (?, ?, 'Scritto', ?, ?, ?)";
         Connection conn = DatabaseManager.getInstance().getConnection();
 
@@ -78,6 +82,8 @@ public class DocenteFacade {
             }
         } catch(SQLException e) {
             System.out.println("Errore dutante l'inserimento del voto: " + e.getMessage());
+        } finally {
+            conn.close();
         }
     }
 }
