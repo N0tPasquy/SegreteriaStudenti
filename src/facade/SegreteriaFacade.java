@@ -3,6 +3,7 @@ package facade;
 import database.DatabaseManager;
 import strategy.SearchStrategy;
 
+import java.sql.Date;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,8 +11,8 @@ import java.sql.SQLException;
 public class SegreteriaFacade {
 
     // Inseriamo un nuovo studente
-    public void iscriviStudente(String Matricola, String Password, String Nome, String Cognome, String Residenza) throws SQLException {
-        String sql = "INSERT INTO Studente (Matricola, Password, Nome, Cognome, Residenza) VALUES (?, ?, ?, ?, ?)";
+    public void iscriviStudente(String Matricola, String Password, String Nome, String Cognome, String Residenza, Date DataNascita) throws SQLException {
+        String sql = "INSERT INTO Studente (Matricola, Password, Nome, Cognome, Residenza, DataNascita) VALUES (?, ?, ?, ?, ?, ?)";
 
         // Prendiamo la connessione FUORI dal try-with-resources
         Connection conn = DatabaseManager.getInstance().getConnection();
@@ -23,6 +24,7 @@ public class SegreteriaFacade {
             stmt.setString(3, Nome);
             stmt.setString(4, Cognome);
             stmt.setString(5, Residenza);
+            stmt.setDate(6, DataNascita);
 
             stmt.executeUpdate();
             System.out.println("Successo: Studente " + Nome + " " + Cognome + " iscritto correttamente!");

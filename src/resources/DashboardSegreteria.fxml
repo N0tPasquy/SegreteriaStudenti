@@ -12,9 +12,9 @@
    <children>
       <MenuButton layoutY="1.0" mnemonicParsing="false" text="Studenti">
         <items>
-          <MenuItem fx:id="apriInserisciStudente" mnemonicParsing="false" text="Inserisci Studente" />
-            <MenuItem fx:id="apriVerbalizzaVoto" mnemonicParsing="false" text="Verbalizza Voto" />
-          <MenuItem fx:id="apriCambiaPianoStudi" mnemonicParsing="false" text="Cambia Piano Di Studi" />
+          <MenuItem fx:id="apriInserisciStudente" mnemonicParsing="false" onAction="#apriInserisciStudente" text="Inserisci Studente" />
+            <MenuItem fx:id="apriVerbalizzaVoto" mnemonicParsing="false" onAction="#apriVerbalizzaVoto" text="Verbalizza Voto" />
+          <MenuItem fx:id="apriCambiaPianoStudi" mnemonicParsing="false" onAction="#apriCambiaPianoStudi" text="Cambia Piano Di Studi" />
         </items>
       </MenuButton>
       <Button fx:id="cercaStudente" layoutX="274.0" layoutY="142.0" mnemonicParsing="false" onAction="#cercaStudente" text="Cerca" />

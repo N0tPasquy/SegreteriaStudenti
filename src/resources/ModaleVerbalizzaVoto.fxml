@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="250.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VerbalizzaVotoController">
+   <children>
+      <TextField fx:id="VerbalizzaMatricola" layoutX="28.0" layoutY="39.0" promptText="Matricola Studente" />
+      <Label layoutX="105.0" layoutY="14.0" text="Verbalizza Voti" />
+      <Button fx:id="CercaVotiMatricola" layoutX="197.0" layoutY="39.0" mnemonicParsing="false" onAction="#cercaVotiMatricola" text="Cerca Voti" />
+      <Button fx:id="VerbalizzaVoti" layoutX="78.0" layoutY="210.0" mnemonicParsing="false" onAction="#VerbalizzaVoti" text="Verbalizza Selezionati" />
+      <TableView fx:id="VotiDaVerbalizzare" layoutX="28.0" layoutY="70.0" prefHeight="125.0" prefWidth="249.0">
+        <columns>
+          <TableColumn prefWidth="176.0" text="Esame" />
+          <TableColumn prefWidth="72.0" text="Voto" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

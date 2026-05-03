@@ -10,7 +10,7 @@ public class SearchByName extends SearchByMatricola {
         // Sepriamo nome e cognome (l' input deve essere del tipo "Mario Rossi")
         String[] parti = nomeCognome.split(" ", 2);
         if (parti.length < 2){
-            return "Inserire sia nome che cognome separati da sapzio.";
+            return "Inserire nome e cognome, con le iniziali in maiuscolo, separati da sapzio.";
         }
 
         String sql = "SELECT * FROM Studente WHERE Nome = ? AND Cognome = ?";
