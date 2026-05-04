@@ -45,20 +45,43 @@ public class SegreteriaFacade {
         return strategia.cerca(inputDiRicerca);
     }
 
-    // Cambia piano di studi a uno studente
-    public void cambiaPianoStudi(String Matricola, String NomeCorso) throws SQLException {
+    // Aggiungi un corso da seguire ad uno studente
+    public void aggiungiCorso(String Matricola, String NomeCorso) throws SQLException {
         String sql = "INSERT INTO DeveSeguire (MatricolaStudente, NomeCorso) VALUES (?, ?)";
-        Connection conn = DatabaseManager.getInstance().getConnection();
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        // Dichiarando la connessione nelle parentesi del blocco try, quest'ultima viene chiusa in automatico non appena il blocco try finisce/lancia un eccezione
+        try(Connection conn = DatabaseManager.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+
             stmt.setString(1, Matricola);
             stmt.setString(2, NomeCorso);
-            stmt.executeUpdate();
-            System.out.println("Piano di studi aggiornato: Aggiunto " + NomeCorso + " allo studente " + Matricola);
-        } catch (Exception e) {
-            System.err.println("Errore aggiornamento piano studi (il corso esiste?).");
-        } finally {
-            conn.close();
+
+            // Va in errore se l'abbinamento esiste gia' oppure se uno dei due campi non esiste nelle tabelle a cui fanno riferimento le Foreign Key
+            stmt.execute();
+        } catch (SQLException e) {
+            throw e;
+        }
+    }
+
+    // Rimuovo un corso dal piano di studi di uno studente
+    public void eliminaCorso(String Matricola, String NomeCorso) throws SQLException {
+        String sql = "DELETE FROM DeveSeguire WHERE MatricolaStudente = ? AND NomeCorso = ?";
+
+        try(Connection conn = DatabaseManager.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, Matricola);
+            stmt.setString(2, NomeCorso);
+
+            // Salvo il numero di righe modificate nel DB
+            int righeModificate = stmt.executeUpdate();
+
+            // Se le righe modificare sono 0, non e' successo nulla, quindi lo studente non aveva il corso assegnato
+            if(righeModificate == 0){
+                throw new SQLException("Il corso non era presente nel piano di studi!");
+            }
+        } catch (SQLException e) {
+            throw e;
         }
     }
 }

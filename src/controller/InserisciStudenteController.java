@@ -35,8 +35,10 @@ public class InserisciStudenteController {
         String Nome = NewNome.getText();
         String Cognome = NewCognome.getText();
         String Residenza = NewResidenza.getText();
+
+        // Traduco la data di nascita da javaFX in data data sql
         LocalDate DataNascita = NewDataNascita.getValue();
-        java.sql.Date dataNascita = java.sql.Date.valueOf(DataNascita);
+        Date dataNascita = Date.valueOf(DataNascita);
 
         // Controllo che nessun campo sia vuoto
         if(Matricola.trim().isEmpty() || Nome.trim().isEmpty() || Cognome.trim().isEmpty() || Residenza.trim().isEmpty()){
