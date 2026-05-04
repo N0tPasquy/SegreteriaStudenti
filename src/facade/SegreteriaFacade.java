@@ -3,10 +3,7 @@ package facade;
 import database.DatabaseManager;
 import strategy.SearchStrategy;
 
-import java.sql.Date;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class SegreteriaFacade {
 
@@ -96,4 +93,47 @@ public class SegreteriaFacade {
             throw e;
         }
     }
+
+    // Metodo che, tramite una query, cerca i voti da verbalizzare di uno studente
+    public String cercaVotiAccettati(String Matricola) throws SQLException{
+        // Uso StringBuilder in moda da concatenare ogni occorrenza della query in un unica stringa
+        StringBuilder risultati = new StringBuilder();
+        String sql = "SELECT NomeCorso, Voto FROM Esito WHERE Matricola = ? AND Stato = 'Accettato'";
+
+        try(Connection conn = DatabaseManager.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, Matricola);
+            ResultSet rs = stmt.executeQuery();
+
+            // In questo ciclo "costruisco" la stringa finale che verrà mostrata nella TextArea
+            while (rs.next()){
+                risultati.append("- Esame: ").append(rs.getString("NomeCorso")).append(" | Voto: ").append(rs.getString("Voto")).append("\n");
+            }
+        }
+
+        if (risultati.length() == 0){
+            return "Nessun voto in attesa di verbalizzazione";
+        }
+
+        // Uso .toString in modp da trasformare "risultati" in un unica stringa
+        return risultati.toString();
+    }
+
+    // Metodo che verbalizza tutti i voti accettati di uno studente, modificando i valori nel DB
+    public void verbalizzaTutti(String Matricola) throws SQLException{
+        String sql = "UPDATE Esito SET Stato = 'Verbalizzato' WHERE Matricola = ? AND Stato = 'Accettato'";
+
+        try(Connection conn = DatabaseManager.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, Matricola);
+
+            int righeAggiornate = stmt.executeUpdate();
+
+            if(righeAggiornate == 0){
+                throw new SQLException("Nessun voto da verbalizzare trovato per questa matricola");
+            }
+        }
+    }
+
 }

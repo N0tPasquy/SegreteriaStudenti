@@ -64,6 +64,7 @@ public class DatabaseManager {
         String sqlEsito = "CREATE TABLE IF NOT EXISTS Esito (" +
                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "Voto INTEGER, " +
+                "Lode INTEGER NOT NULL DEFAULT 0 CHECK (Lode IN (0, 1))," +
                 "Stato VARCHAR(30) NOT NULL, " +
                 "Tipo VARCHAR(30) NOT NULL DEFAULT 'Scritto', " +
                 "NomeCorso VARCHAR(255), " +

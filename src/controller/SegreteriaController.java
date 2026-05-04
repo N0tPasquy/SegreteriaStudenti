@@ -49,7 +49,7 @@ public class SegreteriaController {
 
         // Controllo che non sia vuoto l'area di testo
         if(parametro == null || parametro.trim().isEmpty()){
-            areaRisultati.setText("Errore: Inserisci un parametro di ricerca valido.\nUsa Nome Cognome, con le iniziali in maiuscolo");
+            areaRisultati.setText("Errore: Inserisci un parametro di ricerca valido.\n  Usa Nome Cognome, con le iniziali in maiuscolo");
             return;
         }
 

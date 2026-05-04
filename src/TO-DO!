@@ -8,7 +8,7 @@ V Visualizzare informazioni studente (Strategy Pattern):
     >Campo di testo per l'input.
     >Bottone: Cerca.
     >Area di testo per mostrare i risultati.
-- Confermare il voto (State Pattern): Questa è la verbalizzazione finale! Un campo in cui inserire l'ID dell'esito (o la Matricola) e un bottone Verbalizza.
+V Confermare il voto (State Pattern): Questa è la verbalizzazione finale! Un campo in cui inserire l'ID dell'esito (o la Matricola) e un bottone Verbalizza.
   Questo chiamerà il metodo dello State Pattern che trasforma lo stato da "Accettato" a "Verbalizzato".
 - (Extra architetturale) Setup Iniziale: Creazione Corsi e Registrazione Docenti con assegnazione al corso, per poter usare il programma senza inserire dati a mano nel DB.
 
