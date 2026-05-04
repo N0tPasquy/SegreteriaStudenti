@@ -49,7 +49,7 @@ public class InserisciStudenteController {
             segreteriaFacade.iscriviStudente(Matricola, "Cambiami123", Nome, Cognome, Residenza, dataNascita);
 
             // Visualizzo il messaggio di successo
-            MostraAllert(Alert.AlertType.INFORMATION, "Sucesso", "Studente iscritto correttamente nel database!");
+            MostraAllert(Alert.AlertType.INFORMATION, "Sucesso", "Studente iscritto correttamente!");
 
             // Chiudo tutto automaticamente
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

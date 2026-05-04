@@ -27,9 +27,12 @@ public class SegreteriaFacade {
             stmt.setDate(6, DataNascita);
 
             stmt.executeUpdate();
+
+            // Lascio un log per assicurarmi che vada tutto correttamente durante l'inserimento
             System.out.println("Successo: Studente " + Nome + " " + Cognome + " iscritto correttamente!");
-        } catch (Exception e) {
-            System.err.println("Errore durante l'iscrizione: La matricola potrebbe già esistere.");
+        } catch (SQLException e) {
+            //System.err.println("Errore durante l'iscrizione: La matricola potrebbe già esistere."); Prima stampavo l'errore sulla console, ora passo l'errore alla GUI
+            throw e;
         } finally {
             conn.close();
         }
