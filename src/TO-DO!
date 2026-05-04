@@ -2,7 +2,7 @@ Funzioni da implementare nelle diverse schermate.
 
 DashboardSegreteria:
 V Inserire nuovo studente: Form con Matricola, Password, Nome, Cognome, Residenza (e volendo Data di Nascita). Bottone: Registra Studente.
-- Cambiare piano di studi: Form con Matricola e Nome Corso. Bottone: Aggiungi Corso a Piano di Studi.
+V Cambiare piano di studi: Form con Matricola e Nome Corso. Bottoni: Aggiungi Corso al piano di studi & Rimuovi Corso dal piano di studi.
 V Visualizzare informazioni studente (Strategy Pattern):
     >Scelta della strategia: Due RadioButton ("Cerca per Nome/Cognome" o "Cerca per Matricola").
     >Campo di testo per l'input.

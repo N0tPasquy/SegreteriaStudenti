@@ -47,18 +47,30 @@ public class SegreteriaFacade {
 
     // Aggiungi un corso da seguire ad uno studente
     public void aggiungiCorso(String Matricola, String NomeCorso) throws SQLException {
+        // Query di controllo per verificare che il corso che sto associando ad uno studente esista
+        String sqlCheck = "SELECT Nome FROM Corso WHERE Nome = ?";
         String sql = "INSERT INTO DeveSeguire (MatricolaStudente, NomeCorso) VALUES (?, ?)";
 
-        // Dichiarando la connessione nelle parentesi del blocco try, quest'ultima viene chiusa in automatico non appena il blocco try finisce/lancia un eccezione
-        try(Connection conn = DatabaseManager.getInstance().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql)){
+        try(Connection conn = DatabaseManager.getInstance().getConnection()){
+            // Uso un blocco try per eseguire la query che cerca se il corso esiste
+            try (PreparedStatement stmtCheck = conn.prepareStatement(sqlCheck)){
+                stmtCheck.setString(1, NomeCorso);
 
-            stmt.setString(1, Matricola);
-            stmt.setString(2, NomeCorso);
+                // Eseguo la query dentro un if perche' .next ritorna falso se non c'e' nulla
+                if(!stmtCheck.executeQuery().next()){
+                    throw new SQLException("Il corso '" + NomeCorso + "' non esiste nel sistema.");
+                }
+            }
 
-            // Va in errore se l'abbinamento esiste gia' oppure se uno dei due campi non esiste nelle tabelle a cui fanno riferimento le Foreign Key
-            stmt.execute();
-        } catch (SQLException e) {
+            // Se la query di prima non ha fatto scattare l'eccezione del corso non esistente procedo con l'inserimento del corso al piano di studi
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, Matricola);
+                stmt.setString(2, NomeCorso);
+
+                // Se questo Corso e' gia' presente nel piano di studi scatta l'eccezione per violazione di primary key
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e){
             throw e;
         }
     }

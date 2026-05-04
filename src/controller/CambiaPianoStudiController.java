@@ -46,7 +46,7 @@ public class CambiaPianoStudiController {
             mostraAllert(Alert.AlertType.INFORMATION, "Successo", "Il corso '" + Corso + "' e' stato aggiunto al piano di studi di " + Matricola + ".");
             chiudiFinestra(event);
         } catch (SQLException e){
-            mostraAllert(Alert.AlertType.ERROR, "Errore di Inserimento", "Impossibile aggiungere il corso. Verifica che la matricola e il corso esistano, o che non sia già presente nel piano di studi.");
+            mostraAllert(Alert.AlertType.ERROR, "Errore di Inserimento", e.getMessage())    ;
         }
     }
 
