@@ -49,6 +49,7 @@ public class VerbalizzaVotoController {
         String testoArea = AreaVoti.getText();
         if (testoArea.isEmpty() || testoArea.contains("Nessun voto")){
             mostraAllert(Alert.AlertType.WARNING, "Attenzione", "Nessun voto da verbalizzare per " + Matricola + ".");
+            return;
         }
 
         // Se ci sono voti procedo con la chiamata al metodo in SegreteriaFacade che li verbalizza
