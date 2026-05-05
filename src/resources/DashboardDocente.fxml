@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DocenteController">
    <children>
-      <Label layoutX="236.0" layoutY="191.0" text="Benveuntuo Docente" />
+      <MenuButton layoutY="1.0" mnemonicParsing="false" text="Appelli">
+        <items>
+           <MenuItem fx:id="CreaAppello" mnemonicParsing="false" onAction="#apriCreaAppello" text="Crea Appello" />
+           <!-- <MenuItem fx:id="AssegnaVoto" mnemonicParsing="false" onAction="#AssegnaVoto" text="Assegna Voto" /> -->
+        </items>
+      </MenuButton>
+      <Label layoutX="221.0" layoutY="27.0" text="Ricerca Studenti Prenotati" />
+      <TextField fx:id="NomeCorso" layoutX="104.0" layoutY="67.0" promptText="Nome Corso" />
+      <DatePicker fx:id="DataAppello" layoutX="324.0" layoutY="67.0" promptText="Data d'esame" />
+      <Button fx:id="CercaPrenotati" layoutX="244.0" layoutY="119.0" mnemonicParsing="false" onAction="#cercaPrenotati" text="Cerca Prenotati" />
+      <TextArea fx:id="AreaPrenotati" editable="false" layoutY="165.0" prefHeight="235.0" prefWidth="600.0" />
    </children>
 </AnchorPane>

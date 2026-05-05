@@ -9,28 +9,40 @@ import java.sql.SQLException;
 public class DocenteFacade {
     // Inserisce un nuovo appello nel db
     public void creaAppello(String NomeCorso, String Data) throws SQLException {
+        String sqlCheck = "SELECT Nome FROM Corso WHERE Nome = ?";
         String sql = "INSERT INTO Appello (NomeCorso, Data) VALUES (?, ?)";
         Connection conn = DatabaseManager.getInstance().getConnection();
 
+        // Controllo che il corso esista nel DB
+        try (PreparedStatement stmtCheck = conn.prepareStatement(sqlCheck)) {
+            stmtCheck.setString(1, NomeCorso);
+            if(!stmtCheck.executeQuery().next()){
+                throw new SQLException("Impossibile creare l'appello: il corso\n'" + NomeCorso + "' non esiste nel sistema.");
+            }
+        }
+
+        // Se il corso esiste procedu con la creazione dell'appello
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, NomeCorso);
             stmt.setString(2, Data);
 
             stmt.executeUpdate();
-            System.out.println("Appello creato con successo per il corso di " + NomeCorso + " in data " + Data);
+            //System.out.println("Appello creato con successo per il corso di " + NomeCorso + " in data " + Data);
         } catch (SQLException e) {
-            System.out.println("Errore durante la creazione dell'appello (esiste gia'?): " + e.getMessage());
+            throw e;
         } finally {
             conn.close();
         }
     }
 
     // Visualizza la lista degli studenti prenotati tramite una JOIN
-    public void visualizzaPrenotati(String NomeCorso, String DataAppello) throws SQLException {
+    public String visualizzaPrenotati(String NomeCorso, String DataAppello) throws SQLException {
         String sql = "SELECT S.Matricola, S.Nome, S.Cognome " +
                 "FROM Studente S " +
                 "JOIN SiPrenota P ON S.Matricola = P.MatricolaStudente " +
                 "WHERE P.NomeCorso = ? AND P.DataAppello = ?";
+
+        StringBuilder Risultati = new StringBuilder();
 
         Connection conn = DatabaseManager.getInstance().getConnection();
 
@@ -39,49 +51,48 @@ public class DocenteFacade {
             stmt.setString(2, DataAppello);
 
             ResultSet rs = stmt.executeQuery();
-            boolean ciSonoPrenotati = false;
 
-            System.out.println("--- Studenti prenotati all'appello di " + NomeCorso + " del " + DataAppello + " ---");
             while (rs.next()){
-                ciSonoPrenotati = true;
-                System.out.println("- " + rs.getString("Nome") + " " + rs.getString("Cognome") + " (Matricola: " + rs.getString("Matricola") + ")");
+                Risultati.append("- ").append(rs.getString("Nome")).append(" ").append(rs.getString("Cognome")).append(" (Matricola: ").append(rs.getString("Matricola")).append(")\n");
             }
-            if(!ciSonoPrenotati){
-                System.out.println("Nessuno studente prenotato a questo appello.");
-            }
+
         } catch (SQLException e) {
-            System.out.println("Errore durante il recupero delle prenotazioni: " + e.getMessage());
+           throw e;
         } finally {
             conn.close();
         }
+
+        if (Risultati.length() == 0){
+            return "Nessuno studente prenotato all'appello di " + NomeCorso + " del " + DataAppello + ".";
+        }
+
+        return Risultati.toString();
     }
 
-    public void inserisciVoto(String Matricola, String NomeCorso, String DataAppello, int Voto, boolean assente) throws SQLException {
-        String sql = "INSERT INTO Esito (Voto, Stato, Tipo, Matricola, NomeCorso, Data) VALUES (?, ?, 'Scritto', ?, ?, ?)";
+    public void inserisciVoto(String Matricola, String NomeCorso, String DataAppello, int Voto, boolean assente, String Tipo) throws SQLException {
+        String sql = "INSERT INTO Esito (Voto, Lode, Stato, Tipo, Matricola, NomeCorso, Data) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Connection conn = DatabaseManager.getInstance().getConnection();
 
         try(PreparedStatement stmt = conn.prepareStatement(sql)) {
             if(assente){
-                stmt.setNull(1, java.sql.Types.INTEGER);
-                stmt.setString(2, "Assente"); // Chiudiamo subito il ciclo se e' assente
+                stmt.setNull(1, java.sql.Types.INTEGER); // Voto null se assente
+                stmt.setInt(2, 0);  // Lode false se assente
+                stmt.setString(3, "Assente"); // Chiudiamo subito il ciclo se e' assente
             } else {
                 stmt.setInt(1, Voto);
-                stmt.setString(2, "In Attesa"); // Il triggher per lo State Pattern lato Studente
+                stmt.setInt(2, 1);
+                stmt.setString(3, "In Attesa"); // Il triggher per lo State Pattern lato Studente
             }
 
-            stmt.setString(3, Matricola);
-            stmt.setString(4, NomeCorso);
-            stmt.setString(5, DataAppello);
+            stmt.setString(4, Tipo);
+            stmt.setString(5, Matricola);
+            stmt.setString(6, NomeCorso);
+            stmt.setString(7, DataAppello);
 
             stmt.executeUpdate();
 
-            if(assente){
-                System.out.println("Studente " + Matricola + " registrato come Assente.");
-            } else {
-                System.out.println("Voto di " + Voto + " registrato per lo studente " + Matricola + ". In attesa di essere accettato.");
-            }
         } catch(SQLException e) {
-            System.out.println("Errore dutante l'inserimento del voto: " + e.getMessage());
+            throw e;
         } finally {
             conn.close();
         }

@@ -18,7 +18,7 @@ public class Main extends Application {
         inizializzaDatiDiDefault();
 
         // Carica la schermata grafica (ho lasciato il tuo percorso corretto)
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/DashboardSegreteria.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/DashboardDocente.fxml"));
 
         primaryStage.setTitle("Dashboard Segreteria");
         primaryStage.setScene(new Scene(root));
@@ -45,7 +45,7 @@ public class Main extends Application {
             stmt.execute("INSERT OR IGNORE INTO Corso (Nome, CFU, Anno) VALUES ('Ingegneria del Software', 9, 2026)");
 
             stmt.execute("INSERT OR IGNORE INTO Studente (Matricola, Password, Nome, Cognome, Residenza, DataNascita, TassePagate, ID) " +
-                    "VALUES ('1', 'pass123', 'Nazzaro', 'Tessitore', 'Frignano', '2003-09-14', 1, 1)");
+                    "VALUES ('MAT001', 'pass123', 'Nazzaro', 'Tessitore', 'Frignano', '2003-09-14', 1, 1)");
 
             // Aggiungo degli Appelli, servono per collegare l'esito
             stmt.execute("INSERT OR IGNORE INTO Appello (NomeCorso, Data) VALUES ('Programmazione 3', '2026-05-10')");
@@ -60,7 +60,11 @@ public class Main extends Application {
                     "VALUES (2, 30, 1, 'Accettato', 'Scritto', 'Basi di Dati', '2026-06-15', '1')");
 
             stmt.execute("INSERT OR IGNORE INTO Esito (ID, Voto, Lode, Stato, Tipo, NomeCorso, Data, Matricola) " +
-                    "VALUES (3, 25, 0, 'Accettato', 'Progetto', 'Ingegneria del Software', '2026-07-20', '1')");
+                    "VALUES (3, 0, 0, 'Assente', 'Orale', 'Ingegneria del Software', '2026-07-20', '1')");
+
+            stmt.execute("INSERT OR IGNORE INTO Esito (ID, Voto, Lode, Stato, Tipo, NomeCorso, Data, Matricola) " +
+                    "VALUES (4, 25, 0, 'Accettato', 'Orale', 'Ingegneria del Software', '2026-07-20', '1')");
+
 
             System.out.println("Dati di default generati correttamente.");
         } catch (Exception e) {
