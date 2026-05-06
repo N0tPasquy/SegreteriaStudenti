@@ -16,9 +16,7 @@ import java.sql.SQLException;
 public class CambiaPianoStudiController {
     @FXML private TextField EditMatricola;
     @FXML private TextField EditCorso;
-    @FXML private Button AggiungiCorso;
-    @FXML private Button EliminaCorso;
-    @FXML private Label ErroreCorsoInesistente;
+    @FXML private Label ErrorArea;
 
     private SegreteriaFacade segreteriaFacade;
 
@@ -27,7 +25,7 @@ public class CambiaPianoStudiController {
         segreteriaFacade = new SegreteriaFacade();
 
         // Imposto di default a vuoto la Lable degli errori
-        ErroreCorsoInesistente.setText("");
+        ErrorArea.setText("");
     }
 
     @FXML
@@ -42,11 +40,9 @@ public class CambiaPianoStudiController {
 
         try{
             segreteriaFacade.aggiungiCorso(Matricola, Corso);
-
-            mostraAllert(Alert.AlertType.INFORMATION, "Successo", "Il corso '" + Corso + "' e' stato aggiunto al piano di studi di " + Matricola + ".");
-            chiudiFinestra(event);
+            mostraSuccesso("Il corso '" + Corso + "'\ne' stato aggiunto al piano di studi di\n" + Matricola + ".");
         } catch (SQLException e){
-            mostraAllert(Alert.AlertType.ERROR, "Errore di Inserimento", e.getMessage())    ;
+            mostraErrore("Errore di Inserimento\n" + e.getMessage());
         }
     }
 
@@ -61,37 +57,30 @@ public class CambiaPianoStudiController {
 
         try{
             segreteriaFacade.eliminaCorso(Matricola, Corso);
-
-            mostraAllert(Alert.AlertType.INFORMATION, "Successo", "Il corso '" + Corso + "' e' stato rimosso dal piano di studi di " + Matricola + ".");
-            chiudiFinestra(event);
+            mostraSuccesso("Il corso '" + Corso + "'\ne' stato rimosso dal piano di studi di\n" + Matricola + ".");
         } catch (SQLException e){
-            mostraAllert(Alert.AlertType.ERROR, "Errore di Rimozione", e.getMessage());
+            mostraErrore("Errore di rimozione.\n" + e.getMessage());
         }
     }
 
     // Qui ci sono i metodi di supporto, validazione dei campi, mostra l'errore nella lable nascosta e chiude il pop-up recuperando lo Stage dal bottone premuto
-
     private boolean validaCampi(String Matricola, String Corso){
         if(Matricola.trim().isEmpty() || Corso.trim().isEmpty()){
-            ErroreCorsoInesistente.setStyle("-fx-text-fill: red;");
-            ErroreCorsoInesistente.setText("Compila entrambi i campi");
+            mostraErrore("Compila entrambi i campi");
             return false;
         }
 
-        ErroreCorsoInesistente.setText(""); // Pulisce l'errore se va tutto bene
+        ErrorArea.setText(""); // Pulisce l'errore se va tutto bene
         return true;
     }
 
-    private void mostraAllert(Alert.AlertType Tipo, String Titolo, String Messaggio){
-        Alert alert = new Alert(Tipo);
-        alert.setTitle(Titolo);
-        alert.setHeaderText(null);
-        alert.setContentText(Messaggio);
-        alert.showAndWait();
+    private void mostraErrore(String Messaggio){
+        ErrorArea.setStyle("-fx-text-fill: red;");
+        ErrorArea.setText(Messaggio);
     }
 
-    private void chiudiFinestra(ActionEvent event){
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.close();
+    private void mostraSuccesso(String Messaggio){
+        ErrorArea.setStyle("-fx-text-fill: green;");
+        ErrorArea.setText(Messaggio);
     }
 }

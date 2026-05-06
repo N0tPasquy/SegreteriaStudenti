@@ -18,7 +18,7 @@ public class Main extends Application {
         inizializzaDatiDiDefault();
 
         // Carica la schermata grafica (ho lasciato il tuo percorso corretto)
-        Parent root = FXMLLoader.load(getClass().getResource("/resources/DashboardDocente.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/resources/Login.fxml"));
 
         primaryStage.setTitle("Dashboard Segreteria");
         primaryStage.setScene(new Scene(root));

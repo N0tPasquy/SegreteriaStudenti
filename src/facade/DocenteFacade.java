@@ -17,7 +17,7 @@ public class DocenteFacade {
         try (PreparedStatement stmtCheck = conn.prepareStatement(sqlCheck)) {
             stmtCheck.setString(1, NomeCorso);
             if(!stmtCheck.executeQuery().next()){
-                throw new SQLException("Impossibile creare l'appello: il corso\n'" + NomeCorso + "' non esiste nel sistema.");
+                throw new SQLException("Impossibile creare l'appello:\nil corso' " + NomeCorso + "'\nnon esiste nel sistema.");
             }
         }
 

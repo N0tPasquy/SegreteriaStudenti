@@ -33,7 +33,7 @@ public class LoginController {
         String Username = UsernameField.getText();
         String Password = PasswordField.getText();
 
-        // Richiamo la logica "backend" che usa i diversi design patterns
+        // Richiamo la logica "backend" con il design pattern Handler
         AuthDAO authDAO = new AuthDAO();
         UserExistsHandler ceckUser = new UserExistsHandler(authDAO);
         PasswordHandler ceckPassword = new PasswordHandler(ceckUser);
@@ -46,6 +46,7 @@ public class LoginController {
             String Ruolo = ruolo(Username);
 
             // Uso il builder per creare la sessione
+            // Forse posso rimuovere per intero la parte della sessione, non credo di averla mai usata
             UtenteSessione sessione = new UtenteSessione.Builder(Username, Ruolo).build();
 
             // In base al ruolo rimando al file fxml corretto

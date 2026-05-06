@@ -37,16 +37,17 @@ public class DocenteController {
 
         // Controllo che il docente abbia compilato tutto
         if (Corso.trim().isEmpty() || Data == null){
-            AreaPrenotati.setText("Completa tutti i campi prima di cercare un appello,");
+            mostraErrore("Completa tutti i campi prima di cercare un appello.");
             return;
         }
 
         try {
             // Richiamo il facade per ottenere la lista dei prenotati in base all'imput
             String Risultati = docenteFacade.visualizzaPrenotati(Corso, Data.toString());
+            AreaPrenotati.setStyle("-fx-text-fill: black;");
             AreaPrenotati.setText(Risultati);
         } catch (Exception e) {
-            AreaPrenotati.setText("Errore Database, impossibile recuperare le prenotazioni.\n" +  e.getMessage());
+            mostraErrore("Errore Database, impossibile recuperare le prenotazioni.\n" +  e.getMessage());
         }
     }
 
@@ -74,7 +75,13 @@ public class DocenteController {
             dialogStage.setResizable(false);
             dialogStage.showAndWait();
         } catch (IOException e){
-            AreaPrenotati.setText("Errore GUI, impossibile caricare la schermata: " + e.getMessage());
+            mostraErrore("Errore GUI, impossibile caricare la schermata:\n" + e.getMessage());
         }
+    }
+
+    // Metodo di support per mostrare gli errori in rosso
+    private void mostraErrore(String Messaggio){
+        AreaPrenotati.setStyle("-fx-text-fill: red;");
+        AreaPrenotati.setText(Messaggio);
     }
 }

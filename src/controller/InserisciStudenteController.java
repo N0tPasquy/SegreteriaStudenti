@@ -7,8 +7,8 @@ import java.sql.Date;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -21,12 +21,15 @@ public class InserisciStudenteController {
     @FXML private TextField NewCognome;
     @FXML private TextField NewResidenza;
     @FXML private DatePicker NewDataNascita;
+    @FXML private Label ErrorArea;
 
     private SegreteriaFacade segreteriaFacade;
 
     @FXML
     public void initialize(){
         segreteriaFacade = new SegreteriaFacade();
+
+        ErrorArea.setText("");
     }
 
     @FXML
@@ -36,38 +39,38 @@ public class InserisciStudenteController {
         String Cognome = NewCognome.getText();
         String Residenza = NewResidenza.getText();
 
-        // Traduco la data di nascita da javaFX in data data sql
+        // Traduco la data di nascita da javaFX in data java
         LocalDate DataNascita = NewDataNascita.getValue();
-        Date dataNascita = Date.valueOf(DataNascita);
 
-        // Controllo che nessun campo sia vuoto
-        if(Matricola.trim().isEmpty() || Nome.trim().isEmpty() || Cognome.trim().isEmpty() || Residenza.trim().isEmpty()){
-            MostraAllert(Alert.AlertType.WARNING, "Attenzione", "Compila tutti i campi prima di procedere!");
+        // Controllo che i campi non siano vuoti
+        if(Matricola == null|| Nome == null || Cognome == null|| Residenza == null || DataNascita == null){
+            mostraErrore("Compila tutti i campi prima di procedere!");
             return;
         }
+
+        // Dopo il controllo traduco la data java in data sql
+        Date dataNascita = Date.valueOf(DataNascita);
 
         try {
             // Richiamo il facade per l'inserimento nel DB, con la password di default
             segreteriaFacade.iscriviStudente(Matricola, "Cambiami123", Nome, Cognome, Residenza, dataNascita);
 
             // Visualizzo il messaggio di successo
-            MostraAllert(Alert.AlertType.INFORMATION, "Sucesso", "Studente iscritto correttamente!");
-
-            // Chiudo tutto automaticamente
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.close();
+            mostraSuccesso("Studente iscritto correttamente!");
         } catch (Exception e){
             e.printStackTrace();
-            MostraAllert(Alert.AlertType.ERROR, "Errore Database", "Impossibile iscrivere lo studente. Verifica che la matricola non esista già.");
+            mostraErrore("Impossibile iscrivere lo studente. Verifica che la matricola non esista già.");
         }
     }
 
-    // Metodo che crea un popup con javaFX
-    private void MostraAllert(Alert.AlertType tipo, String Titolo, String Messaggio){
-        Alert alert = new Alert(tipo);
-        alert.setTitle(Titolo);
-        alert.setHeaderText(null);
-        alert.setContentText(Messaggio);
-        alert.showAndWait();
+    // Metodi di supporto per non ripetere sempre le stesse 2 righe
+    private void mostraErrore(String Messaggio){
+        ErrorArea.setStyle("-fx-text-fill: red;");
+        ErrorArea.setText(Messaggio);
+    }
+
+    private void mostraSuccesso(String Messaggio){
+        ErrorArea.setStyle("-fx-text-fill: green;");
+        ErrorArea.setText(Messaggio);
     }
 }

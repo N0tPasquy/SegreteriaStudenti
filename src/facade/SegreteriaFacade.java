@@ -55,7 +55,7 @@ public class SegreteriaFacade {
 
                 // Eseguo la query dentro un if perche' .next ritorna falso se non c'e' nulla
                 if(!stmtCheck.executeQuery().next()){
-                    throw new SQLException("Il corso '" + NomeCorso + "' non esiste nel sistema.");
+                    throw new SQLException("Il corso '" + NomeCorso + "'\nnon esiste nel sistema.");
                 }
             }
 
@@ -64,7 +64,7 @@ public class SegreteriaFacade {
                 stmt.setString(1, Matricola);
                 stmt.setString(2, NomeCorso);
 
-                // Se questo Corso e' gia' presente nel piano di studi scatta l'eccezione per violazione di primary key
+                // Se questo Corso è gia' presente nel piano di studi scatta l'eccezione per violazione di primary key
                 stmt.executeUpdate();
             }
         } catch (SQLException e){
@@ -87,7 +87,7 @@ public class SegreteriaFacade {
 
             // Se le righe modificare sono 0, non e' successo nulla, quindi lo studente non aveva il corso assegnato
             if(righeModificate == 0){
-                throw new SQLException("Il corso non era presente nel piano di studi!");
+                throw new SQLException("Il corso non era presente\nnel piano di studi!");
             }
         } catch (SQLException e) {
             throw e;

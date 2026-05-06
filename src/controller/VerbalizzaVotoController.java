@@ -28,7 +28,7 @@ public class VerbalizzaVotoController {
         String Matricola = VerbalizzaMatricola.getText();
 
         if(Matricola == null || Matricola.trim().isEmpty()){
-            mostraAllert(Alert.AlertType.WARNING, "Attenzione", "Inserisci una matricola prima di cercare.");
+            mostraErrore("Inserisci una matricola prima di cercare.");
         }
 
         // Richiamo il metodo da SegreteriaFacade per mostrare la stringa dei risultati
@@ -36,7 +36,7 @@ public class VerbalizzaVotoController {
             String Risultati = segreteriaFacade.cercaVotiAccettati(Matricola);
             AreaVoti.setText(Risultati);
         } catch (SQLException e){
-            mostraAllert(Alert.AlertType.ERROR, "Errore DB", e.getMessage());
+            mostraErrore("Errore DB:\n" + e.getMessage());
         }
     }
 
@@ -48,29 +48,31 @@ public class VerbalizzaVotoController {
         // Evito chiamate al DB se non c'e' nulla da verbalizzare
         String testoArea = AreaVoti.getText();
         if (testoArea.isEmpty() || testoArea.contains("Nessun voto")){
-            mostraAllert(Alert.AlertType.WARNING, "Attenzione", "Nessun voto da verbalizzare per " + Matricola + ".");
+            mostraErrore("Nessun voto da verbalizzare per " + Matricola + ".");
             return;
         }
 
         // Se ci sono voti procedo con la chiamata al metodo in SegreteriaFacade che li verbalizza
         try {
                 segreteriaFacade.verbalizzaTutti(Matricola);
-                mostraAllert(Alert.AlertType.INFORMATION, "Successo", "Tutti i voti che erano in attesa sono stati verbalizzati con successo.");
+                mostraSuccesso("Tutti i voti che erano in attesa sono stati verbalizzati con successo.");
 
                 // Chiudo automaticamente la finestra dopo che ho verbalizzato
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.close();
         } catch (SQLException e){
-            mostraAllert(Alert.AlertType.ERROR, "Errore di verbalizzazione", e.getMessage());
+            mostraErrore("Errore di verbalizzazione:\n" + e.getMessage());
         }
     }
 
-    // Metodo che crea i pop-up
-    private void mostraAllert(Alert.AlertType Tipo, String Titolo, String Messaggio){
-        Alert alert = new Alert(Tipo);
-        alert.setTitle(Titolo);
-        alert.setHeaderText(null);
-        alert.setContentText(Messaggio);
-        alert.showAndWait();
+    // Metodo di supporto che mostra gli errori in rosso
+    private void mostraErrore(String Messaggio){
+        AreaVoti.setStyle("-fx-text-fill: red;");
+        AreaVoti.setText(Messaggio);
+    }
+
+    private void mostraSuccesso(String Messaggio){
+        AreaVoti.setStyle("-fx-text-fill: green;");
+        AreaVoti.setText(Messaggio);
     }
 }

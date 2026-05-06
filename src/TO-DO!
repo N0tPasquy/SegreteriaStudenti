@@ -4,19 +4,19 @@ Attualmente quando c'e' un errore viene creato un pop-up ad hoc. Prima di conseg
 in modo da rendere il codice piu' semplice. In questo file segnero con "!" dove viene usato ancora il pop-up.
 
 DashboardSegreteria:
-! V Inserire nuovo studente: Form con Matricola, Password, Nome, Cognome, Residenza (e volendo Data di Nascita). Bottone: Registra Studente.
-! V Cambiare piano di studi: Form con Matricola e Nome Corso. Bottoni: Aggiungi Corso al piano di studi & Rimuovi Corso dal piano di studi.
-! V Visualizzare informazioni studente (Strategy Pattern):
+V Inserire nuovo studente: Form con Matricola, Password, Nome, Cognome, Residenza (e volendo Data di Nascita). Bottone: Registra Studente.
+V Cambiare piano di studi: Form con Matricola e Nome Corso. Bottoni: Aggiungi Corso al piano di studi & Rimuovi Corso dal piano di studi.
+V Visualizzare informazioni studente (Strategy Pattern):
     >Scelta della strategia: Due RadioButton ("Cerca per Nome/Cognome" o "Cerca per Matricola").
     >Campo di testo per l'input.
     >Bottone: Cerca.
     >Area di testo per mostrare i risultati.
-! V Confermare il voto (State Pattern): Questa è la verbalizzazione finale! Un campo in cui inserire l'ID dell'esito (o la Matricola) e un bottone Verbalizza.
+V Confermare il voto (State Pattern): Questa è la verbalizzazione finale! Un campo in cui inserire l'ID dell'esito (o la Matricola) e un bottone Verbalizza.
   Questo chiamerà il metodo dello State Pattern che trasforma lo stato da "Accettato" a "Verbalizzato".
 - (Extra architetturale) Setup Iniziale: Creazione Corsi e Registrazione Docenti con assegnazione al corso, per poter usare il programma senza inserire dati a mano nel DB.
 
 DashboardDocente:
-! V Inserire un appello: Form con Nome Corso e Data. Bottone: Crea Appello.
+V Inserire un appello: Form con Nome Corso e Data. Bottone: Crea Appello.
 V Gestire le prenotazioni: Inserendo Nome Corso e Data, un bottone Mostra Prenotati stampa a schermo la lista degli studenti iscritti a quell'appello.
 V Inserire il voto di esame: Form con Matricola, Corso, Data e Voto.
     >Nota dalla traccia: "Lo studente può essere anche assente". Ti basterà aggiungere una CheckBox "Assente" nella GUI;

@@ -7,11 +7,10 @@
 
 <AnchorPane prefHeight="250.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CambiaPianoStudiController">
    <children>
-      <Label layoutX="83.0" layoutY="14.0" text="Cambia Piano Di Studi" />
-      <TextField fx:id="EditMatricola" layoutX="69.0" layoutY="66.0" promptText="Matricola" />
-      <TextField fx:id="EditCorso" layoutX="69.0" layoutY="112.0" promptText="Corso da Aggiungere" />
-      <Button fx:id="AggiungiCorso" layoutX="26.0" layoutY="186.0" mnemonicParsing="false" onAction="#AggiungiCorso" text="Aggungi Corso" />
-      <Button fx:id="EliminaCorso" layoutX="161.0" layoutY="186.0" mnemonicParsing="false" onAction="#EliminaCorso" text="Elimina Corso" textFill="RED" />
-      <Label fx:id="ErroreCorsoInesistente" layoutX="72.0" layoutY="153.0" />
+      <TextField fx:id="EditMatricola" layoutX="69.0" layoutY="41.0" promptText="Matricola" />
+      <TextField fx:id="EditCorso" layoutX="69.0" layoutY="87.0" promptText="Corso da Aggiungere" />
+      <Button layoutX="26.0" layoutY="186.0" mnemonicParsing="false" onAction="#AggiungiCorso" text="Aggungi Corso" />
+      <Button layoutX="161.0" layoutY="186.0" mnemonicParsing="false" onAction="#EliminaCorso" text="Elimina Corso" textFill="RED" />
+      <Label fx:id="ErrorArea" layoutX="17.0" layoutY="117.0" prefHeight="67.0" prefWidth="264.0" />
    </children>
 </AnchorPane>

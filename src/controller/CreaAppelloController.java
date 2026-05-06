@@ -33,8 +33,7 @@ public class CreaAppelloController {
 
         // Controllo che tutti i campi siano compilati
         if(Corso.trim().isEmpty() || Data == null){
-            ErrorCode.setStyle("-fx-text-fill: red;");
-            ErrorCode.setText("Compila tutti i campi");
+            mostraErrore("Compila tutti i campi");
             return;
         }
 
@@ -44,11 +43,20 @@ public class CreaAppelloController {
         try {
             // Richiamo il facade che inserisce l'appello nel DB
             docenteFacade.creaAppello(Corso, Data.toString());
-            ErrorCode.setStyle("-fx-text-fill: green;");
-            ErrorCode.setText("Appello aggiunto correttamente\nin data " + Data + ".");
+            mostraSuccesso("Appello aggiunto correttamente\nin data " + Data + ".");
         } catch (SQLException e){
-            ErrorCode.setStyle("-fx-text-fill: red;");
-            ErrorCode.setText("Errore Creazione:\n" + e.getMessage());
+            mostraErrore("Errore Creazione:\n" + e.getMessage());
         }
+    }
+
+    // Metodi per far comparire i messaggi di errore e successo colorati
+    private void mostraErrore(String Messaggio){
+        ErrorCode.setStyle("-fx-text-fill: red;");
+        ErrorCode.setText(Messaggio);
+    }
+
+    private void mostraSuccesso(String Messaggio){
+        ErrorCode.setStyle("-fx-text-fill: green;");
+        ErrorCode.setText(Messaggio);
     }
 }
