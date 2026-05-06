@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="250.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.InserisciVotoController">
+   <children>
+      <TextField fx:id="Matricola" layoutX="69.0" layoutY="14.0" promptText="Matricola" />
+      <TextField fx:id="NomeCorso" layoutX="69.0" layoutY="46.0" promptText="Nome Corso Esame" />
+      <TextField fx:id="Voto" layoutX="69.0" layoutY="78.0" promptText="Voto" />
+      <DatePicker fx:id="DataEsame" layoutX="56.0" layoutY="112.0" promptText="Data Esame" />
+      <CheckBox fx:id="Assente" layoutX="66.0" layoutY="144.0" mnemonicParsing="false" text="Assente" />
+      <CheckBox fx:id="Lode" layoutX="176.0" layoutY="144.0" mnemonicParsing="false" text="Lode" />
+      <Label fx:id="ErrorArea" layoutX="25.0" layoutY="164.0" prefHeight="42.0" prefWidth="252.0" />
+      <Button fx:id="InviaVoto" layoutX="99.0" layoutY="210.0" mnemonicParsing="false" onAction="#InviaVoto" text="Invia Voto" />
+   </children>
+</AnchorPane>

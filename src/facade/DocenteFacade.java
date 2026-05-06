@@ -69,7 +69,7 @@ public class DocenteFacade {
         return Risultati.toString();
     }
 
-    public void inserisciVoto(String Matricola, String NomeCorso, String DataAppello, int Voto, boolean assente, String Tipo) throws SQLException {
+    public void inserisciVoto(String Matricola, String NomeCorso, String DataAppello, int Voto, boolean assente, boolean Lode) throws SQLException {
         String sql = "INSERT INTO Esito (Voto, Lode, Stato, Tipo, Matricola, NomeCorso, Data) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Connection conn = DatabaseManager.getInstance().getConnection();
 
@@ -77,14 +77,14 @@ public class DocenteFacade {
             if(assente){
                 stmt.setNull(1, java.sql.Types.INTEGER); // Voto null se assente
                 stmt.setInt(2, 0);  // Lode false se assente
-                stmt.setString(3, "Assente"); // Chiudiamo subito il ciclo se e' assente
+                stmt.setString(3, "Assente"); // Chiudiamo subito il ciclo se è assente
             } else {
                 stmt.setInt(1, Voto);
-                stmt.setInt(2, 1);
+                stmt.setInt(2, Lode ? 1 : 0); // Se Lode e' true al DB passo 1, altrimenti passo 0
                 stmt.setString(3, "In Attesa"); // Il triggher per lo State Pattern lato Studente
             }
 
-            stmt.setString(4, Tipo);
+            stmt.setString(4, "Orale"); // Per semplicita' il tipo di esame sara' sempre orale.
             stmt.setString(5, Matricola);
             stmt.setString(6, NomeCorso);
             stmt.setString(7, DataAppello);

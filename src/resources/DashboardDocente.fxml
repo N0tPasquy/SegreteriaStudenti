@@ -14,7 +14,7 @@
       <MenuButton layoutY="1.0" mnemonicParsing="false" text="Appelli">
         <items>
            <MenuItem fx:id="CreaAppello" mnemonicParsing="false" onAction="#apriCreaAppello" text="Crea Appello" />
-           <!-- <MenuItem fx:id="AssegnaVoto" mnemonicParsing="false" onAction="#AssegnaVoto" text="Assegna Voto" /> -->
+           <MenuItem fx:id="AssegnaVoto" mnemonicParsing="false" onAction="#apriAssegnaVoto" text="Assegna Voto" />
         </items>
       </MenuButton>
       <Label layoutX="221.0" layoutY="27.0" text="Ricerca Studenti Prenotati" />

@@ -57,7 +57,7 @@ public class DocenteController {
 
     @FXML
     public void apriAssegnaVoto(ActionEvent event){
-        apriModale("/resources/ModaleAssegnaVoto.fxml", "Assegna Voto Studente");
+        apriModale("/resources/ModaleInserisciVoto.fxml", "Assegna Voto Studente");
     }
 
     // Metodo apriModale come abbiamo fatto per la segreteria,
