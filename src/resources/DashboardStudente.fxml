@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StudenteController">
    <children>
-      <Label layoutX="237.0" layoutY="191.0" text="Benvenuto Studente" />
+      <MenuButton layoutY="1.0" mnemonicParsing="false" text="Esami">
+        <items>
+          <MenuItem fx:id="apriPrenotaEsame" mnemonicParsing="false" onAction="#apriPrenotaEsame" text="Prenota Esame" />
+          <MenuItem fx:id="apriAccettaVoto" mnemonicParsing="false" onAction="#apriAccettaVoto" text="Accetta Voto" />
+        </items>
+      </MenuButton>
+      <Button fx:id="vediPianoStudi" layoutX="157.0" layoutY="55.0" mnemonicParsing="false" onAction="#vediPianoStudi" text="Piano di Studi" />
+      <Button fx:id="vediVotiAttesa" layoutX="358.0" layoutY="55.0" mnemonicParsing="false" onAction="#vediVotiAttesa" text="Voti in Attesa" />
+      <Button fx:id="VediAppelli" layoutX="239.0" layoutY="108.0" mnemonicParsing="false" onAction="#VediAppelli" text="Visualizza Appelli" />
+      <TextArea fx:id="AreaRisultati" editable="false" layoutY="200.0" prefHeight="200.0" prefWidth="600.0" />
    </children>
 </AnchorPane>

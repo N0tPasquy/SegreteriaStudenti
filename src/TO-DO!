@@ -27,6 +27,6 @@ DashboardStudente:
 - Prenotarsi per un esame: Form con Nome Corso e Data (quelli creati dal docente). Bottone: Prenotami.
 - Accettare o rifiutare un esame (State Pattern):
     >Un bottone per Visualizzare i voti "In Attesa".
-    >Un campo per inserire l'ID del voto da gestire.
+    >Un campo per inserire il Nome del Corso da gestire.
     >Due bottoni: Accetta e Rifiuta.
-    >Gestione Eccezioni: Se clicca "Rifiuta" su un voto già accettato,la GUI deve intercettare la nostra AzioneNonPermessaException e mostrare una Label di errore rossa!
+    >Gestione Eccezioni: Se clicca "Rifiuta" su un voto già accettato,la GUI deve intercettare l'eccezione "AzioneNonPermessaException" e mostrare una Label di errore rossa!

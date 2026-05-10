@@ -3,7 +3,6 @@ package controller;
 import auth.PasswordHandler;
 import auth.UserExistsHandler;
 import dao.AuthDAO;
-import model.UtenteSessione;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +15,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import javax.accessibility.AccessibleValue;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -46,8 +44,7 @@ public class LoginController {
             String Ruolo = ruolo(Username);
 
             // Uso il builder per creare la sessione
-            // Forse posso rimuovere per intero la parte della sessione, non credo di averla mai usata
-            UtenteSessione sessione = new UtenteSessione.Builder(Username, Ruolo).build();
+            // Capire come passare questo oggetto sessione alla dashboard dello studente
 
             // In base al ruolo rimando al file fxml corretto
             String fileFxml = "";
@@ -56,7 +53,7 @@ public class LoginController {
                 case "DOCENTE": fileFxml = "/resources/DashboardDocente.fxml"; break;
                 case "STUDENTE": fileFxml = "/resources/DashboardStudente.fxml"; break;
             }
-            cambiaFinestra(event, fileFxml);
+            cambiaFinestra(event, fileFxml, Username);
 
         } else{
             ErrorLabel.setStyle("-fx-text-fill: red;");
@@ -71,10 +68,18 @@ public class LoginController {
         return "STUDENTE";
     }
 
-    private void cambiaFinestra(ActionEvent event, String fileFxml){
+    private void cambiaFinestra(ActionEvent event, String fileFxml, String identificativo){
         try{
-            Parent root = FXMLLoader.load(getClass().getResource(fileFxml));
-            // Recupero la finestra attuale partendo dal pulsante cliccato
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fileFxml));
+            Parent root = loader.load();
+
+            // INIEZIONE DEI DATI: Capiamo quale controller è stato caricato e passiamo il dato
+            Object controller = loader.getController();
+            if (controller instanceof StudenteController) {
+                ((StudenteController) controller).initData(identificativo);
+            }
+            // (Se in futuro servirà l'ID alla Segreteria o al Docente, aggiungerai gli 'else if' qui)
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.show();
