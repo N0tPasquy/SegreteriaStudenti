@@ -53,6 +53,7 @@ public class InserisciVotoController {
             // Se "Assente" non è spuntata allora deve esserci un voto
             if(voto == null){
                 mostraErrore("Inserisci un voto.");
+                return;
             }
 
             // Se tutto è okay procedo con i controlli sul voto

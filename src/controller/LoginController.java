@@ -43,8 +43,7 @@ public class LoginController {
             // Ritrovo il ruolo in base all'Username
             String Ruolo = ruolo(Username);
 
-            // Uso il builder per creare la sessione
-            // Capire come passare questo oggetto sessione alla dashboard dello studente
+            // Usa il ruolo dal CredenzialiDTO nel login, non la lunghezza dell’username.
 
             // In base al ruolo rimando al file fxml corretto
             String fileFxml = "";

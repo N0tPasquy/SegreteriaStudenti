@@ -29,6 +29,7 @@ public class VerbalizzaVotoController {
 
         if(Matricola == null || Matricola.trim().isEmpty()){
             mostraErrore("Inserisci una matricola prima di cercare.");
+            return;
         }
 
         // Richiamo il metodo da SegreteriaFacade per mostrare la stringa dei risultati
