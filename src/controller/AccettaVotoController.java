@@ -1,6 +1,5 @@
 package controller;
 
-import eccezioni.AzioneNonPermessaException;
 import facade.StudenteFacade;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,8 +50,6 @@ public class AccettaVotoController {
 
             // Se tutto va bene mostriamo la scritta verde di successo
             mostraSuccesso(Risultato);
-        } catch (AzioneNonPermessaException e){
-            mostraErrore(e.getMessage());
         }catch (SQLException e){
             mostraErrore("Errore SQL:\n" + e.getMessage());
         }

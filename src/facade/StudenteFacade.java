@@ -1,10 +1,8 @@
 package facade;
 
 import database.DatabaseManager;
-import eccezioni.AzioneNonPermessaException;
 import state.*;
 
-import javax.xml.crypto.Data;
 import java.sql.*;
 
 public class StudenteFacade {
@@ -133,7 +131,7 @@ public class StudenteFacade {
     }
 
     // Metodo per accettare o rifiutare il voto di un esame, integrato con lo state pattern
-    public String gestisciVoto(String Matricola, String NomeCorso, boolean accettaVoto) throws SQLException, AzioneNonPermessaException {
+    public String gestisciVoto(String Matricola, String NomeCorso, boolean accettaVoto) throws SQLException{
         // Usiamo Matricola e NomeCorso per trovare la riga esatta!
         String sqlSelect = "SELECT ID, Voto, Stato FROM Esito WHERE NomeCorso = ? AND Matricola = ? AND Stato = 'In Attesa'";
         Connection conn = database.DatabaseManager.getInstance().getConnection();
@@ -188,6 +186,9 @@ public class StudenteFacade {
 
         } catch (SQLException e) {
             throw e;
+        }catch (IllegalStateException e) {
+            // Intercetta il blocco dello State Pattern
+            return e.getMessage();
         } finally {
             conn.close();
         }

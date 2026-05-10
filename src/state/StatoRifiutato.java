@@ -1,11 +1,9 @@
 package state;
 
-import eccezioni.AzioneNonPermessaException;
-
 public class StatoRifiutato implements StatoEsito {
     @Override
-    public void accetta(Esito esito)throws AzioneNonPermessaException{
-        throw new AzioneNonPermessaException("Operazione negata: Non puoi accettare un voto che hai gia' rifiutato in precedenza.");
+    public void accetta(Esito esito){
+        throw new IllegalStateException("Operazione negata: Non puoi accettare un voto che hai gia' rifiutato in precedenza.");
     }
 
     /*  TO-DO!
@@ -17,8 +15,8 @@ public class StatoRifiutato implements StatoEsito {
     }
 
     @Override
-    public void verbalizza(Esito esito) throws AzioneNonPermessaException{
-        throw new AzioneNonPermessaException("Operazione negata: Non puoi verbalizzare un voto rifiutato.");
+    public void verbalizza(Esito esito){
+        throw new IllegalStateException("Operazione negata: Non puoi verbalizzare un voto rifiutato.");
     }
 
     @Override

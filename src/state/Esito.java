@@ -1,7 +1,5 @@
 package state;
 
-import eccezioni.AzioneNonPermessaException;
-
 public class Esito {
     private int ID;
     private int Voto;
@@ -22,15 +20,15 @@ public class Esito {
     }
 
     // Metodi che delegano il lavoro alla classe dello stato corrente
-    public void accetta() throws AzioneNonPermessaException{
+    public void accetta(){
         statoCorrente.accetta(this);
     }
 
-    public void rifiuta() throws AzioneNonPermessaException{
+    public void rifiuta(){
         statoCorrente.rifiuta(this);
     }
 
-    public void verbalizza() throws AzioneNonPermessaException{
+    public void verbalizza(){
         statoCorrente.verbalizza(this);
     }
 
