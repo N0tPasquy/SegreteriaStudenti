@@ -23,9 +23,9 @@ V Inserire il voto di esame: Form con Matricola, Corso, Data e Voto.
     se spuntata, il voto registrato può essere uno 0 o un codice speciale, inserendo l'Esito nel DB. Bottone: Registra Voto (lo stato iniziale sarà automaticamente "In Attesa").
 
 DashboardStudente:
-- Consultare il piano di studi: Un bottone Mostra il mio Piano di Studi che, leggendo la matricola loggata in sessione, mostra i corsi che deve seguire.
-- Prenotarsi per un esame: Form con Nome Corso e Data (quelli creati dal docente). Bottone: Prenotami.
-- Accettare o rifiutare un esame (State Pattern):
+V Consultare il piano di studi: Un bottone Mostra il mio Piano di Studi che, leggendo la matricola loggata in sessione, mostra i corsi che deve seguire.
+V Prenotarsi per un esame: Form con Nome Corso e Data (quelli creati dal docente). Bottone: Prenotami.
+V Accettare o rifiutare un esame (State Pattern):
     >Un bottone per Visualizzare i voti "In Attesa".
     >Un campo per inserire il Nome del Corso da gestire.
     >Due bottoni: Accetta e Rifiuta.
