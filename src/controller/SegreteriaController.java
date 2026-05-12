@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import strategy.SearchByMatricola;
 import strategy.SearchByName;
 
-import javax.imageio.IIOException;
 import java.io.IOException;
 import java.sql.SQLException;
 

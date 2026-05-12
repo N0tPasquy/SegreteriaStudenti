@@ -3,11 +3,8 @@ package controller;
 import facade.SegreteriaFacade;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.sql.SQLException;
 
@@ -57,10 +54,6 @@ public class VerbalizzaVotoController {
         try {
                 segreteriaFacade.verbalizzaTutti(Matricola);
                 mostraSuccesso("Tutti i voti che erano in attesa sono stati verbalizzati con successo.");
-
-                // Chiudo automaticamente la finestra dopo che ho verbalizzato
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.close();
         } catch (SQLException e){
             mostraErrore("Errore di verbalizzazione:\n" + e.getMessage());
         }
