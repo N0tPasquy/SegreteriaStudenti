@@ -13,40 +13,32 @@ public class AuthDAO {
         Connection conn = DatabaseManager.getInstance().getConnection();
 
         try{
-            // Cerchiamo se è uno Studente (Usa la matricola)
+            // Studente
             try(PreparedStatement stmt = conn.prepareStatement("SELECT Password FROM Studente WHERE Matricola = ?")){
                 stmt.setString(1, Username);
                 ResultSet rs = stmt.executeQuery();
                 // Se la query è andata allora esiste un utente con quell'Username e mi riprendo la password dal DB per confrontarla con quella inserita
                 if(rs.next()) return new CredenzialiDTO(Username, rs.getString("Password"), "STUDENTE");
-            }catch (SQLException e) {
-                e.printStackTrace();
             }
 
-            // Cerchiamo se è un Docente (usa il CF)
+            // Docente
             try(PreparedStatement stmt = conn.prepareStatement("SELECT Password FROM Docente WHERE CF= ?")) {
                 stmt.setString(1, Username);
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) return new CredenzialiDTO(Username, rs.getString("Password"), "DOCENTE");
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
 
-            // Cerchiamo se è la segreteria (usa l' ID)
+            // Segreteria
             try(PreparedStatement stmt = conn.prepareStatement("SELECT Password FROM Segreteria WHERE ID = ?")) {
                 stmt.setString(1, Username);
                 ResultSet rs = stmt.executeQuery();
                 if(rs.next()) return new CredenzialiDTO(Username, rs.getString("Password"),"SEGRETERIA");
-            }catch (SQLException e) {
-                e.printStackTrace();
             }
-        } catch (Exception e) {
-                throw new RuntimeException(e);
         } finally {
             conn.close();
         }
 
-        // Se non lo trova da nessuna parte, ritorna null
+        // Se non lo trova da nessuna parte, chiudiamo la connessione e ritorna null
         return null;
     }
 }

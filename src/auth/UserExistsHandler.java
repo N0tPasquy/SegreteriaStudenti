@@ -6,27 +6,25 @@ import model.CredenzialiDTO;
 import java.sql.SQLException;
 
 public class UserExistsHandler extends LoginHandler {
-    private AuthDAO authDAO;
-    private CredenzialiDTO utenteTrovato; // Salviamo l'utente per passarlo allo step successivo
+    private final AuthDAO authDAO;
 
     public UserExistsHandler(AuthDAO authDAO){
         this.authDAO = authDAO;
     }
 
     @Override
-    public boolean handle(String Username, String PasswordInput) throws SQLException {
-        utenteTrovato = authDAO.trovaUtente(Username);
+    public CredenzialiDTO handle(String Username, String PasswordInput, CredenzialiDTO Utente) throws SQLException {
+        CredenzialiDTO UtenteTrovato = authDAO.trovaUtente(Username);
 
-        if(utenteTrovato == null){
-            System.out.println("Errore: Utente non trovato nel db.");
-            return false; // Interrompe la catena
+        if(UtenteTrovato == null){
+            System.out.println("Eorre: Utente non trovato nel DB.");
+            return null;
         }
 
-        // Passiamo al prossimo controllo
-        return super.handle(Username, PasswordInput);
-    }
+        if(nextHandler != null){
+            return nextHandler.handle(Username, PasswordInput, UtenteTrovato);
+        }
 
-    public CredenzialiDTO getUtenteTrovato(){
-        return utenteTrovato;
+        return UtenteTrovato;
     }
 }

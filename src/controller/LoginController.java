@@ -3,6 +3,7 @@ package controller;
 import auth.PasswordHandler;
 import auth.UserExistsHandler;
 import dao.AuthDAO;
+import model.CredenzialiDTO;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,48 +32,49 @@ public class LoginController {
         String Username = UsernameField.getText();
         String Password = PasswordField.getText();
 
-        // Richiamo la logica "backend" con il design pattern Handler
         AuthDAO authDAO = new AuthDAO();
-        UserExistsHandler ceckUser = new UserExistsHandler(authDAO);
-        PasswordHandler ceckPassword = new PasswordHandler(ceckUser);
-        ceckUser.setNext(ceckPassword);
 
-        boolean logiSuccess = ceckUser.handle(Username, Password);
+        UserExistsHandler checkUser = new UserExistsHandler(authDAO);
+        PasswordHandler checkPassword = new PasswordHandler();
 
-        if(logiSuccess){
-            // Ritrovo il ruolo in base all'Username
-            String Ruolo = ruolo(Username);
+        checkUser.setNext(checkPassword);
 
-            // Usa il ruolo dal CredenzialiDTO nel login, non la lunghezza dell’username.
+        CredenzialiDTO UtenteAutenticato = checkUser.handle(Username, Password, null);
 
-            // In base al ruolo rimando al file fxml corretto
-            String fileFxml = "";
-            switch (Ruolo){
-                case "SEGRETERIA": fileFxml = "/resources/DashboardSegreteria.fxml"; break;
-                case "DOCENTE": fileFxml = "/resources/DashboardDocente.fxml"; break;
-                case "STUDENTE": fileFxml = "/resources/DashboardStudente.fxml"; break;
+        if(UtenteAutenticato != null){
+            String Ruolo = UtenteAutenticato.getRuolo();
+            String FileFxml = "";
+            String identificativo = "";
+
+            switch(Ruolo){
+                case "SEGRETERIA":
+                    FileFxml = "/resources/DashboardSegreteria.fxml";
+                    break;
+                case "DOCENTE":
+                    FileFxml = "/resources/DashboardDocente.fxml";
+                    break;
+                case "STUDENTE":
+                    FileFxml = "/resources/DashboardStudente.fxml";
+                    break;
+                default:
+                    ErrorLabel.setStyle("-fx-text-fill: red;");
+                    ErrorLabel.setText("Ruolo non riconosciuto");
+                    return;
             }
-            cambiaFinestra(event, fileFxml, Username);
 
-        } else{
+            cambiaFinestra(event, FileFxml, Username, UtenteAutenticato.getRuolo());
+        } else {
             ErrorLabel.setStyle("-fx-text-fill: red;");
             ErrorLabel.setText("Credenziali errate o utente non trovato.");
         }
-
     }
 
-    private String ruolo(String Username){
-        if(Username.equals("1")) return "SEGRETERIA";
-        if(Username.length() == 16) return "DOCENTE";
-        return "STUDENTE";
-    }
-
-    private void cambiaFinestra(ActionEvent event, String fileFxml, String identificativo){
+    private void cambiaFinestra(ActionEvent event, String fileFxml, String identificativo, String Ruolo){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fileFxml));
             Parent root = loader.load();
 
-            // INIEZIONE DEI DATI: Capiamo quale controller è stato caricato e passiamo il dato
+            // Capiamo quale controller è stato caricato e passiamo il dato
             Object controller = loader.getController();
             if (controller instanceof StudenteController) {
                 ((StudenteController) controller).initData(identificativo);
@@ -81,6 +83,7 @@ public class LoginController {
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.setTitle("DASHBOARD " + Ruolo);
             stage.show();
         } catch (IOException e){
             e.printStackTrace();
