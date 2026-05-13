@@ -59,7 +59,7 @@ public class VerbalizzaVotoController {
         }
     }
 
-    // Metodo di supporto che mostra gli errori in rosso
+    // Metodi di supporto
     private void mostraErrore(String Messaggio){
         AreaVoti.setStyle("-fx-text-fill: red;");
         AreaVoti.setText(Messaggio);

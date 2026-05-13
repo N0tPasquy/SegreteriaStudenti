@@ -39,24 +39,27 @@ public class SegreteriaController {
         gruppoRicerca = new ToggleGroup();
         radioMatricola.setToggleGroup(gruppoRicerca);
         radioNomeCognome.setToggleGroup(gruppoRicerca);
-
-        // Setto la ricerca della matricola come predefinita
         radioMatricola.setSelected(true);
     }
 
-    // Metodo richiamato quando si clicca il pulsante ricerca
+    // Cerco lo studente tenendo conto del radio button, che sceglie la strategia
     @FXML
     public void cercaStudente(ActionEvent event) throws SQLException {
         String parametro = campoRicerca.getText();
 
-        // Controllo che non sia vuoto l'area di testo
         if(parametro == null || parametro.trim().isEmpty()){
             areaRisultati.setText("Errore: Inserisci un parametro di ricerca valido.\n  Usa Nome Cognome, con le iniziali in maiuscolo");
             return;
         }
 
-        SearchStrategy strategia = radioMatricola.isSelected() ? new SearchByMatricola() : new SearchByName();
+        SearchStrategy strategia;
+        if (radioMatricola.isSelected()) {
+            strategia = new SearchByMatricola();
+        } else {
+            strategia = new SearchByName();
+        }
 
+        // Chiamo il metodo nel facade che cerca gli studenti
         try {
             List<StudenteDTO> Risultati = segreteriaFacade.visualizzaStudente(strategia, parametro);
             areaRisultati.setText(formattaRisultati(Risultati));
@@ -67,7 +70,7 @@ public class SegreteriaController {
         }
     }
 
-    // Metodo di supporto per capire se il risultato è vuoto
+    // Dall lista di StudneteDTO ritorna una stringa con tutti gli studenti trovati
     private String formattaRisultati(List<StudenteDTO> risultati){
         if(risultati.isEmpty()){
             return "Nessuno studente trovato con questi criteri";
@@ -82,7 +85,7 @@ public class SegreteriaController {
         return sb.toString();
     }
 
-    // Metodo di support che apre i modali in base all'opzione scelta nel menu' a tendina
+    // Metodi di support che apre i modali in base all'opzione scelta nel menu' a tendina
     @FXML
     private void apriModale(String percorsoFxml, String titolo){
         try{
@@ -90,18 +93,13 @@ public class SegreteriaController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(percorsoFxml));
             Parent root = loader.load();
 
-            // Creo una nuova finestra
             Stage dialogStage = new Stage();
             dialogStage.setTitle(titolo);
             dialogStage.setScene(new Scene(root));
 
             // Blocco l'interazione con la finestra principale fino a quando non chiudo il modale appena aperto
             dialogStage.initModality(Modality.APPLICATION_MODAL);
-
-            // Impedisco di ridimensionare il modale
             dialogStage.setResizable(false);
-
-            // Mostro il modale e aspetta che viene chiuso
             dialogStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,19 +109,16 @@ public class SegreteriaController {
 
     @FXML
     public void apriInserisciStudente(ActionEvent event){
-        // Codice per aprire modale inserisci studente
         apriModale("/resources/ModaleInserisciStudente.fxml", "Inserimento Nuovo Studente");
     }
 
     @FXML
     public void apriVerbalizzaVoto(ActionEvent event){
-        // Codice per aprire modale veralizza voto di un esame
         apriModale("/resources/ModaleVerbalizzaVoto.fxml", "Verbalizzazione Voto");
     }
 
     @FXML
     public void apriCambiaPianoStudi(ActionEvent event){
-        // Codice per cambiare piano di studi di uno studente
         apriModale("/resources/ModaleCambiaPianoStudi.fxml", "Aggiungi Corso al Piano di Studi");
     }
 }

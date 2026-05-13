@@ -28,7 +28,6 @@ public class CreaAppelloController {
         String Corso = NomeCorso.getText();
         LocalDate Data = DataAppello.getValue();
 
-        // Controllo che tutti i campi siano compilati
         if(Corso.trim().isEmpty() || Data == null){
             mostraErrore("Compila tutti i campi");
             return;
@@ -46,7 +45,6 @@ public class CreaAppelloController {
         }
     }
 
-    // Metodi per far comparire i messaggi di errore e successo colorati
     private void mostraErrore(String Messaggio){
         ErrorCode.setStyle("-fx-text-fill: red;");
         ErrorCode.setText(Messaggio);

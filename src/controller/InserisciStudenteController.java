@@ -12,7 +12,6 @@ import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
 
-// Lo studente avra' una password di default che al primo login dovrà cambiare
 public class InserisciStudenteController {
     @FXML private TextField NewMatricola;
     @FXML private TextField NewNome;
@@ -40,7 +39,6 @@ public class InserisciStudenteController {
         // Traduco la data di nascita da javaFX in data java
         LocalDate DataNascita = NewDataNascita.getValue();
 
-        // Controllo che i campi non siano vuoti
         if(Matricola == null|| Nome == null || Cognome == null|| Residenza == null || DataNascita == null){
             mostraErrore("Compila tutti i campi prima di procedere!");
             return;
@@ -52,8 +50,6 @@ public class InserisciStudenteController {
         try {
             // Richiamo il facade per l'inserimento nel DB, con la password di default
             segreteriaFacade.iscriviStudente(Matricola, "Cambiami123", Nome, Cognome, Residenza, dataNascita);
-
-            // Visualizzo il messaggio di successo
             mostraSuccesso("Studente iscritto correttamente!");
         } catch (Exception e){
             e.printStackTrace();
@@ -61,7 +57,7 @@ public class InserisciStudenteController {
         }
     }
 
-    // Metodi di supporto per non ripetere sempre le stesse 2 righe
+    // Metodi di supporto
     private void mostraErrore(String Messaggio){
         ErrorArea.setStyle("-fx-text-fill: red;");
         ErrorArea.setText(Messaggio);

@@ -70,13 +70,13 @@ public class StudenteController {
         apriModale("/resources/ModaleAccettaVoto.fxml", "Gestisci Esiti");
     }
 
-    // Metodo di supporto per aprire i modali
+    // Metodo di supporto per aprire i modali passando anche la matricola loggata
     private void apriModale(String Percorso, String Titolo){
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Percorso));
             Parent root = loader.load();
 
-            // Passiamo la matricola al modale corrispondente
+            // Passiamo la matricola al modale
             Object controller = loader.getController();
             if (controller instanceof PrenotaEsameController) {
                 ((PrenotaEsameController) controller).initData(MatricolaLoggata);

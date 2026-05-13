@@ -33,9 +33,8 @@ public class StudenteFacade {
         }
     }
 
-    // Visualizza gli appelli disponibili
+    // Seleziona solo gli appelli dei corsi presenti nel piano di studi di uno studente
     public String visualizzaAppelli(String Matricola) throws SQLException {
-        // Mostriamo solo gli appelli dei corsi presenti nel piano di studi dello studente!
         String sql = "SELECT A.NomeCorso, A.Data FROM Appello A " +
                 "JOIN DeveSeguire D ON A.NomeCorso = D.NomeCorso " +
                 "WHERE D.MatricolaStudente = ?";
@@ -79,7 +78,7 @@ public class StudenteFacade {
 
             while (rs.next()){
                 String Lode = "";
-                if(rs.getInt("Lode") == 1){
+                if(rs.getInt("Lode") == 1){ // Se c'e' lode allora la aggiungo alla stringa
                     Lode = " e lode";
                 }
                 Risultato.append("- Esame: ").append(rs.getString("NomeCorso")).append(" | Voto: ").append(rs.getInt("Voto")).append(Lode).append(".\n");
@@ -117,7 +116,7 @@ public class StudenteFacade {
             }
             stmtAppello.close();
 
-            // Se entrambi i controlli sono andati a buon fine allora inserico la prenotazione
+            // Se entrambi i controlli sono andati a buon fine allora inserico la prenotazione nel DB
             String sql = "INSERT INTO SiPrenota (MatricolaStudente, NomeCorso, DataAppello) VALUES (?, ?, ? )";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, Matricola);
@@ -159,7 +158,7 @@ public class StudenteFacade {
 
                 String statoPrima = esito.getNomeStato();
 
-                // Esegue l'azione dello State Pattern. Se fallisce, lancia l'eccezione al Controller!
+                // Esegue l'azione dello State Pattern. Se fallisce, lancia l'eccezione al Controller
                 if (accettaVoto) {
                     esito.accetta();
                 } else {

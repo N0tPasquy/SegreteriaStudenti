@@ -9,14 +9,11 @@ import java.util.List;
 
 public class SegreteriaFacade {
 
-    // Inseriamo un nuovo studente
     public void iscriviStudente(String Matricola, String Password, String Nome, String Cognome, String Residenza, Date DataNascita) throws SQLException {
         String sql = "INSERT INTO Studente (Matricola, Password, Nome, Cognome, Residenza, DataNascita) VALUES (?, ?, ?, ?, ?, ?)";
 
-        // Prendiamo la connessione FUORI dal try-with-resources
         Connection conn = DatabaseManager.getInstance().getConnection();
 
-        // Mettiamo solo lo statement dentro le parentesi!
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, Matricola);
             stmt.setString(2, Password);
@@ -27,29 +24,24 @@ public class SegreteriaFacade {
 
             stmt.executeUpdate();
 
-            // Lascio un log per assicurarmi che vada tutto correttamente durante l'inserimento
             System.out.println("Successo: Studente " + Nome + " " + Cognome + " iscritto correttamente!");
         } catch (SQLException e) {
-            //System.err.println("Errore durante l'iscrizione: La matricola potrebbe già esistere."); Prima stampavo l'errore sulla console, ora passo l'errore alla GUI
             throw e;
         } finally {
             conn.close();
         }
     }
 
-    // Ricercare uno studente usando lo Strategy Pattern
     public List<StudenteDTO> visualizzaStudente(SearchStrategy strategia, String input) throws SQLException{
         return strategia.cerca(input);
     }
 
-    // Aggiungi un corso da seguire ad uno studente
     public void aggiungiCorso(String Matricola, String NomeCorso) throws SQLException {
-        // Query di controllo per verificare che il corso che sto associando ad uno studente esista
+
         String sqlCheck = "SELECT Nome FROM Corso WHERE Nome = ?";
         String sql = "INSERT INTO DeveSeguire (MatricolaStudente, NomeCorso) VALUES (?, ?)";
 
         try(Connection conn = DatabaseManager.getInstance().getConnection()){
-            // Uso un blocco try per eseguire la query che cerca se il corso esiste
             try (PreparedStatement stmtCheck = conn.prepareStatement(sqlCheck)){
                 stmtCheck.setString(1, NomeCorso);
 
@@ -59,7 +51,6 @@ public class SegreteriaFacade {
                 }
             }
 
-            // Se la query di prima non ha fatto scattare l'eccezione del corso non esistente procedo con l'inserimento del corso al piano di studi
             try (PreparedStatement stmt = conn.prepareStatement(sql)) {
                 stmt.setString(1, Matricola);
                 stmt.setString(2, NomeCorso);
@@ -72,7 +63,6 @@ public class SegreteriaFacade {
         }
     }
 
-    // Rimuovo un corso dal piano di studi di uno studente
     public void eliminaCorso(String Matricola, String NomeCorso) throws SQLException {
         String sql = "DELETE FROM DeveSeguire WHERE MatricolaStudente = ? AND NomeCorso = ?";
 
@@ -94,7 +84,6 @@ public class SegreteriaFacade {
         }
     }
 
-    // Metodo che, tramite una query, cerca i voti da verbalizzare di uno studente
     public String cercaVotiAccettati(String Matricola) throws SQLException{
         // Uso StringBuilder in moda da concatenare ogni occorrenza della query in un unica stringa
         StringBuilder risultati = new StringBuilder();
@@ -115,11 +104,9 @@ public class SegreteriaFacade {
             return "Nessun voto in attesa di verbalizzazione";
         }
 
-        // Uso .toString in modp da trasformare "risultati" in un unica stringa
         return risultati.toString();
     }
 
-    // Metodo che verbalizza tutti i voti accettati di uno studente, modificando i valori nel DB
     public void verbalizzaTutti(String Matricola) throws SQLException{
         String sql = "UPDATE Esito SET Stato = 'Verbalizzato' WHERE Matricola = ? AND Stato = 'Accettato'";
 

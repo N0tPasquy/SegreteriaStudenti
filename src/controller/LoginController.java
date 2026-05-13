@@ -26,7 +26,6 @@ public class LoginController {
     @FXML private PasswordField PasswordField;
     @FXML private Label ErrorLabel;
 
-    // Metodo che verra' richiamato quando si clicca il pulsante Accedi
     @FXML
     public void gestisciLogin(ActionEvent event) throws SQLException {
         String Username = UsernameField.getText();
@@ -44,7 +43,6 @@ public class LoginController {
         if(UtenteAutenticato != null){
             String Ruolo = UtenteAutenticato.getRuolo();
             String FileFxml = "";
-            String identificativo = "";
 
             switch(Ruolo){
                 case "SEGRETERIA":
@@ -74,12 +72,11 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fileFxml));
             Parent root = loader.load();
 
-            // Capiamo quale controller è stato caricato e passiamo il dato
+            // Se e' uno studente a fare il login, passo anche la matricola al controller
             Object controller = loader.getController();
             if (controller instanceof StudenteController) {
                 ((StudenteController) controller).initData(identificativo);
             }
-            // (Se in futuro servirà l'ID alla Segreteria o al Docente, aggiungerai gli 'else if' qui)
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));

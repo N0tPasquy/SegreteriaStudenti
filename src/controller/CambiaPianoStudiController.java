@@ -28,7 +28,6 @@ public class CambiaPianoStudiController {
         String Matricola = EditMatricola.getText();
         String Corso = EditCorso.getText();
 
-        // Controllo che i campi non siano vuoti
         if(!validaCampi(Matricola, Corso)){
             return;
         }
@@ -58,7 +57,7 @@ public class CambiaPianoStudiController {
         }
     }
 
-    // Qui ci sono i metodi di supporto, validazione dei campi, mostra l'errore nella lable nascosta e chiude il pop-up recuperando lo Stage dal bottone premuto
+    // Qui ci sono i metodi di supporto, validazione dei campi e mostra l'errore/successo nella lable nascosta
     private boolean validaCampi(String Matricola, String Corso){
         if(Matricola.trim().isEmpty() || Corso.trim().isEmpty()){
             mostraErrore("Compila entrambi i campi");

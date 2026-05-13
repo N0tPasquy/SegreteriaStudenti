@@ -33,7 +33,6 @@ public class DocenteController {
         String Corso = NomeCorso.getText();
         LocalDate Data = DataAppello.getValue();
 
-        // Controllo che il docente abbia compilato tutto
         if (Corso.trim().isEmpty() || Data == null){
             mostraErrore("Completa tutti i campi prima di cercare un appello.");
             return;
@@ -42,7 +41,7 @@ public class DocenteController {
         try {
             // Richiamo il facade per ottenere la lista dei prenotati in base all'imput
             String Risultati = docenteFacade.visualizzaPrenotati(Corso, Data.toString());
-            AreaPrenotati.setStyle("-fx-text-fill: black;");
+            AreaPrenotati.setStyle("-fx-text-fill: black;"); // resetto il colore del testo se prima c'era un errore
             AreaPrenotati.setText(Risultati);
         } catch (Exception e) {
             mostraErrore("Errore Database, impossibile recuperare le prenotazioni.\n" +  e.getMessage());
@@ -60,7 +59,6 @@ public class DocenteController {
     }
 
     // Metodo apriModale come abbiamo fatto per la segreteria,
-    // forse conviene scriverlo 1 volta sola e richiamarlo in entrambi i casi
     private void apriModale(String Percorso, String Titolo){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Percorso));

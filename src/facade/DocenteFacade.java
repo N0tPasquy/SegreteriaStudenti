@@ -4,7 +4,7 @@ import database.DatabaseManager;
 import java.sql.*;
 
 public class DocenteFacade {
-    // Inserisce un nuovo appello nel db
+
     public void creaAppello(String NomeCorso, String Data) throws SQLException {
         String sqlCheck = "SELECT Nome FROM Corso WHERE Nome = ?";
         String sql = "INSERT INTO Appello (NomeCorso, Data) VALUES (?, ?)";
@@ -24,7 +24,6 @@ public class DocenteFacade {
             stmt.setString(2, Data);
 
             stmt.executeUpdate();
-            //System.out.println("Appello creato con successo per il corso di " + NomeCorso + " in data " + Data);
         } catch (SQLException e) {
             throw e;
         } finally {
@@ -60,7 +59,7 @@ public class DocenteFacade {
         }
 
         if (Risultati.length() == 0){
-            return "Nessuno studente prenotato all'appello di " + NomeCorso + " del " + DataAppello + ".";
+            return "Nessuno studente prenotato all'appello di:\n" + NomeCorso + " del " + DataAppello + ".";
         }
 
         return Risultati.toString();
