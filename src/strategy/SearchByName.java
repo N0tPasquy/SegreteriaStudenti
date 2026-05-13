@@ -1,19 +1,24 @@
 package strategy;
 
+import model.StudenteDTO;
+
 import java.sql.SQLException;
+import java.util.List;
 
 public class SearchByName extends SearchByMatricola {
 
-    // Al momento la funzione di ricerca per Nome e Congome è case sensitive, bisogna prestare attenzione quando si inserisce il nome in input
+    // Al momento la funzione di ricerca per Nome e Congome è case sensitive,
+    // bisogna prestare attenzione quando si inserisce il nome in input
     @Override
-    public String cerca(String nomeCognome) throws SQLException {
-        // Sepriamo nome e cognome (l' input deve essere del tipo "Mario Rossi")
-        String[] parti = nomeCognome.split(" ", 2);
-        if (parti.length < 2){
-            return "Inserire nome e cognome, con le iniziali in maiuscolo, separati da sapzio.";
+    public List<StudenteDTO> cerca(String input) throws SQLException{
+        // .split("\\s+", 2) indica di usare come separatore il carattere spazio, "+" indica di considerare anche piu' spazi
+        String[] parti = input.trim().split("\\s+", 2);
+
+        if(parti.length < 2){
+            throw new IllegalArgumentException("Inserire Nome e Cognome separati da spazio.");
         }
 
-        String sql = "SELECT * FROM Studente WHERE Nome = ? AND Cognome = ?";
+        String sql = "SELECT Nome, Cognome, Matricola FROM Studente WHERE Nome = ? AND Cognome = ?";
         return eseguiRicerca(sql, parti[0], parti[1]);
     }
 }

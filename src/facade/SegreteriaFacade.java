@@ -2,8 +2,10 @@ package facade;
 
 import database.DatabaseManager;
 import strategy.SearchStrategy;
+import model.StudenteDTO;
 
 import java.sql.*;
+import java.util.List;
 
 public class SegreteriaFacade {
 
@@ -36,10 +38,8 @@ public class SegreteriaFacade {
     }
 
     // Ricercare uno studente usando lo Strategy Pattern
-    public String visualizzaStudente(SearchStrategy strategia, String inputDiRicerca) throws SQLException {
-        System.out.println("Ricerca in corso...");
-        System.out.println(inputDiRicerca);
-        return strategia.cerca(inputDiRicerca);
+    public List<StudenteDTO> visualizzaStudente(SearchStrategy strategia, String input) throws SQLException{
+        return strategia.cerca(input);
     }
 
     // Aggiungi un corso da seguire ad uno studente

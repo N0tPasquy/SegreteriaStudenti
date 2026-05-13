@@ -1,8 +1,10 @@
 package strategy;
 
+import model.StudenteDTO;
 import java.sql.SQLException;
+import java.util.List;
 
 public interface SearchStrategy{
-    // Ritorna String per stampare a video, ma in futuro potresti fargli ritornare un DTO
-    String cerca (String input) throws SQLException;
+    // Ritorna una lista di DTO, in questo caso un lista di studenti
+    List<StudenteDTO> cerca (String input) throws SQLException;
 }

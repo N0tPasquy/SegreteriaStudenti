@@ -12,11 +12,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.StudenteDTO;
 import strategy.SearchByMatricola;
 import strategy.SearchByName;
+import strategy.SearchStrategy;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class SegreteriaController {
     @FXML private RadioButton radioMatricola;
@@ -52,16 +55,31 @@ public class SegreteriaController {
             return;
         }
 
-        String risultato = "";
+        SearchStrategy strategia = radioMatricola.isSelected() ? new SearchByMatricola() : new SearchByName();
 
-        // Richiamo il facade in base al pulsante selezionato dall'utente
-        if(radioMatricola.isSelected()){
-            risultato = segreteriaFacade.visualizzaStudente(new SearchByMatricola(), parametro);
-        } else if (radioNomeCognome.isSelected()) {
-            risultato = segreteriaFacade.visualizzaStudente(new SearchByName(), parametro);
+        try {
+            List<StudenteDTO> Risultati = segreteriaFacade.visualizzaStudente(strategia, parametro);
+            areaRisultati.setText(formattaRisultati(Risultati));
+        } catch (IllegalArgumentException e){
+            areaRisultati.setText(e.getMessage());
+        } catch (SQLException e){
+            areaRisultati.setText(e.getMessage());
+        }
+    }
+
+    // Metodo di supporto per capire se il risultato è vuoto
+    private String formattaRisultati(List<StudenteDTO> risultati){
+        if(risultati.isEmpty()){
+            return "Nessuno studente trovato con questi criteri";
         }
 
-        areaRisultati.setText(risultato);
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < risultati.size(); i++){
+            StudenteDTO studente = risultati.get(i);
+            sb.append("- Trovato: ").append(studente.getNome()).append(" ").append(studente.getCognome()).append(", con matricola ").append(studente.getMatricola()).append(".\n");
+        }
+
+        return sb.toString();
     }
 
     // Metodo di support che apre i modali in base all'opzione scelta nel menu' a tendina

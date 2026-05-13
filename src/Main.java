@@ -71,7 +71,7 @@ public class Main extends Application {
             stmt.execute("INSERT OR IGNORE INTO Studente (Matricola, Password, Nome, Cognome, Residenza, DataNascita, TassePagate, ID) VALUES ('MAT007', 'stud07', 'Andrea', 'Gallo', 'Marcianise', '2001-09-02', 0, 7)");
             stmt.execute("INSERT OR IGNORE INTO Studente (Matricola, Password, Nome, Cognome, Residenza, DataNascita, TassePagate, ID) VALUES ('MAT008', 'stud08', 'Elena', 'Costa', 'San Nicolò', '2003-12-11', 1, 8)");
             stmt.execute("INSERT OR IGNORE INTO Studente (Matricola, Password, Nome, Cognome, Residenza, DataNascita, TassePagate, ID) VALUES ('MAT009', 'stud09', 'Davide', 'Barbieri', 'Capodrise', '2000-06-25', 1, 9)");
-            stmt.execute("INSERT OR IGNORE INTO Studente (Matricola, Password, Nome, Cognome, Residenza, DataNascita, TassePagate, ID) VALUES ('MAT010', 'stud10', 'Martina', 'Moretti', 'Recale', '2002-08-14', 1, 10)");
+            stmt.execute("INSERT OR IGNORE INTO Studente (Matricola, Password, Nome, Cognome, Residenza, DataNascita, TassePagate, ID) VALUES ('MAT010', 'stud10', 'Alice', 'Verdi', 'Recale', '2002-08-14', 1, 10)");
 
             // --- Appelli (10+) ---
             stmt.execute("INSERT OR IGNORE INTO Appello (NomeCorso, Data) VALUES ('Programmazione 3', '2026-05-10')");
