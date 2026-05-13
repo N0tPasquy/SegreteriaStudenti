@@ -6,9 +6,6 @@ public class StatoRifiutato implements StatoEsito {
         throw new IllegalStateException("Operazione negata: Non puoi accettare un voto che hai gia' rifiutato in precedenza.");
     }
 
-    /*  TO-DO!
-        Per quando si implementa la parte GIU implementare una seconda verifica per il rifiuto
-     */
     @Override
     public void rifiuta(Esito esito){
         System.out.println("Voto rifiutato.");

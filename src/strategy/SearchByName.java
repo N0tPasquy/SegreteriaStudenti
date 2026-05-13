@@ -5,7 +5,7 @@ import model.StudenteDTO;
 import java.sql.SQLException;
 import java.util.List;
 
-public class SearchByName extends SearchByMatricola {
+public class SearchByName extends AbstractSearchStrategy {
 
     // Al momento la funzione di ricerca per Nome e Congome è case sensitive,
     // bisogna prestare attenzione quando si inserisce il nome in input
