@@ -1,7 +1,6 @@
 package facade;
 
 import database.DatabaseManager;
-import state.*;
 
 import java.sql.*;
 
@@ -130,64 +129,51 @@ public class StudenteFacade {
     }
 
     // Metodo per accettare o rifiutare il voto di un esame, integrato con lo state pattern
-    public String gestisciVoto(String Matricola, String NomeCorso, boolean accettaVoto) throws SQLException{
-        // Usiamo Matricola e NomeCorso per trovare la riga esatta!
-        String sqlSelect = "SELECT ID, Voto, Stato FROM Esito WHERE NomeCorso = ? AND Matricola = ? AND Stato = 'In Attesa'";
+    public String gestisciVoto(String matricola, String nomeCorso, boolean accettaVoto) throws SQLException {
+        String sqlSelect = "SELECT ID, Stato FROM Esito WHERE NomeCorso = ? AND Matricola = ?";
+        String nuovoStato = "";
+        if (accettaVoto) {
+            nuovoStato = "Accettato";
+        } else {
+            nuovoStato = "Rifiutato";
+        }
+
         Connection conn = database.DatabaseManager.getInstance().getConnection();
 
         try {
             PreparedStatement stmtSelect = conn.prepareStatement(sqlSelect);
-            stmtSelect.setString(1, NomeCorso);
-            stmtSelect.setString(2, Matricola);
+            stmtSelect.setString(1, nomeCorso);
+            stmtSelect.setString(2, matricola);
 
             ResultSet rs = stmtSelect.executeQuery();
 
-            if (rs.next()) {
-                int idEsito = rs.getInt("ID");
-                int Voto = rs.getInt("Voto");
-                String statoDB = rs.getString("Stato");
-
-                Esito esito = new Esito(idEsito, Voto, Matricola);
-
-                switch (statoDB) {
-                    case "In Attesa": esito.setStato(new state.StatoInAttesa()); break;
-                    case "Accettato": esito.setStato(new state.StatoAccettato()); break;
-                    case "Rifiutato": esito.setStato(new state.StatoRifiutato()); break;
-                    case "Verbalizzato": esito.setStato(new state.StatoVerbalizzato()); break;
-                }
-
-                String statoPrima = esito.getNomeStato();
-
-                // Esegue l'azione dello State Pattern. Se fallisce, lancia l'eccezione al Controller
-                if (accettaVoto) {
-                    esito.accetta();
-                } else {
-                    esito.rifiuta();
-                }
-
-                if (!statoPrima.equals(esito.getNomeStato())) {
-                    String sqlUpdate = "UPDATE Esito SET Stato = ? WHERE ID = ?";
-                    PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdate);
-
-                    stmtUpdate.setString(1, esito.getNomeStato());
-                    stmtUpdate.setInt(2, idEsito);
-                    stmtUpdate.executeUpdate();
-                    stmtUpdate.close();
-
-                    return "Voto di " + NomeCorso + "\n" + (accettaVoto ? "accettato" : "rifiutato") + " con successo!";
-                }
-
-                return "Nessuna modifica effettuata.";
-
-            } else {
-                throw new SQLException("Nessun voto in attesa trovato\nper il corso di " + NomeCorso);
+            if (!rs.next()) {
+                throw new SQLException("Nessun voto trovato per il corso di " + nomeCorso);
             }
 
-        } catch (SQLException e) {
-            throw e;
-        }catch (IllegalStateException e) {
-            // Intercetta il blocco dello State Pattern
-            return e.getMessage();
+            int idEsito = rs.getInt("ID");
+            String statoAttuale = rs.getString("Stato");
+
+            if (!"In Attesa".equals(statoAttuale)) {
+                return "Voto gia' accettato!";
+            }
+
+            String sqlUpdate = "UPDATE Esito SET Stato = ? WHERE ID = ?";
+            PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdate);
+            stmtUpdate.setString(1, nuovoStato);
+            stmtUpdate.setInt(2, idEsito);
+            stmtUpdate.executeUpdate();
+            stmtUpdate.close();
+
+            String esito;
+            if (accettaVoto) {
+                esito = "accettato";
+            } else {
+                esito = "rifiutato";
+            }
+
+            return "Voto di " + nomeCorso + "\n" + esito + " con successo!";
+
         } finally {
             conn.close();
         }

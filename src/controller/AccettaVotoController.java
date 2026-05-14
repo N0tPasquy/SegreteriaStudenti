@@ -41,6 +41,7 @@ public class AccettaVotoController {
 
         if(Corso == null || Corso.trim().isEmpty()){
             mostraErrore("Inserisci il nome del corso!");
+            NomeCorso.clear();
             return;
         }
 
@@ -50,6 +51,7 @@ public class AccettaVotoController {
 
             // Se tutto va bene mostriamo la scritta verde di successo
             mostraSuccesso(Risultato);
+            NomeCorso.clear();
         }catch (SQLException e){
             mostraErrore("Errore SQL:\n" + e.getMessage());
         }
