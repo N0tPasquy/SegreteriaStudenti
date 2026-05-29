@@ -95,7 +95,7 @@ public class StudenteFacade {
         Connection conn = DatabaseManager.getInstance().getConnection();
 
         try {
-            // Controllo se il corso e' nel piano di studi dello studente
+            // Controllo se il corso  e' nel piano di studi dello studente
             String sqlPiano = "SELECT NomeCorso FROM DeveSeguire WHERE MatricolaStudente = ? AND NomeCorso = ?";
             PreparedStatement stmtPiano = conn.prepareStatement(sqlPiano);
             stmtPiano.setString(1, Matricola);

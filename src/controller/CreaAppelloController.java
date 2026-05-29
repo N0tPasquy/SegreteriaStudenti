@@ -16,11 +16,16 @@ public class CreaAppelloController {
     @FXML Label ErrorCode;
 
     private DocenteFacade docenteFacade;
+    private String CFLoggato;
 
     @FXML
     public void initialize(){
         docenteFacade = new DocenteFacade();
         ErrorCode.setText("");
+    }
+
+    public void initData(String CF){
+        this.CFLoggato = CF;
     }
 
     @FXML
@@ -38,7 +43,7 @@ public class CreaAppelloController {
 
         try {
             // Richiamo il facade che inserisce l'appello nel DB
-            docenteFacade.creaAppello(Corso, Data.toString());
+            docenteFacade.creaAppello(CFLoggato, Corso, Data.toString());
             mostraSuccesso("Appello aggiunto correttamente\nin data " + Data + ".");
         } catch (SQLException e){
             mostraErrore("Errore Creazione:\n" + e.getMessage());

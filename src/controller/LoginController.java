@@ -76,6 +76,8 @@ public class LoginController {
             Object controller = loader.getController();
             if (controller instanceof StudenteController) {
                 ((StudenteController) controller).initData(identificativo);
+            } else if(controller instanceof DocenteController){
+                ((DocenteController) controller).initData(identificativo);
             }
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

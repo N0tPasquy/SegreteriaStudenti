@@ -21,11 +21,16 @@ public class InserisciVotoController {
     @FXML private Label ErrorArea;
 
     private DocenteFacade docenteFacade;
+    private String CFLoggato;
 
     @FXML
     public void initialize(){
         docenteFacade = new DocenteFacade();
         ErrorArea.setText("");
+    }
+
+    public void initData(String CF){
+        this.CFLoggato = CF;
     }
 
     @FXML
@@ -76,7 +81,7 @@ public class InserisciVotoController {
         ErrorArea.setText("");
 
         try {
-            docenteFacade.inserisciVoto(matricola, corso, data.toString(), votoFinale, lode, assente);
+            docenteFacade.inserisciVoto(CFLoggato, matricola, corso, data.toString(), votoFinale, lode, assente);
 
             // Se lo studente risulta assente, anche se il docente inserisce per sbaglio un voto, il backend lo capisce
             // e ignora del tutto il voto, inserendo null come valore.

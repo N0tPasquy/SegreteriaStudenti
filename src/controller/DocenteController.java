@@ -22,10 +22,15 @@ public class DocenteController {
     @FXML private TextArea AreaPrenotati;
 
     private DocenteFacade docenteFacade;
+    private String CFLoggato;
 
     @FXML
     public void initialize(){
         docenteFacade = new DocenteFacade();
+    }
+
+    public void initData(String CF){
+        this.CFLoggato = CF;
     }
 
     @FXML
@@ -40,7 +45,7 @@ public class DocenteController {
 
         try {
             // Richiamo il facade per ottenere la lista dei prenotati in base all'imput
-            String Risultati = docenteFacade.visualizzaPrenotati(Corso, Data.toString());
+            String Risultati = docenteFacade.visualizzaPrenotati(CFLoggato, Corso, Data.toString());
             AreaPrenotati.setStyle("-fx-text-fill: black;"); // resetto il colore del testo se prima c'era un errore
             AreaPrenotati.setText(Risultati);
         } catch (Exception e) {
@@ -63,6 +68,13 @@ public class DocenteController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(Percorso));
             Parent root = loader.load();
+
+            Object controller = loader.getController();
+            if (controller instanceof CreaAppelloController) {
+                ((CreaAppelloController) controller).initData(CFLoggato);
+            } else if (controller instanceof InserisciVotoController) {
+                ((InserisciVotoController) controller).initData(CFLoggato);
+            }
 
             Stage dialogStage = new Stage();
             dialogStage.setTitle(Titolo);
