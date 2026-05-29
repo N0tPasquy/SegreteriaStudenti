@@ -35,16 +35,16 @@ public class Main extends Application {
         try (Statement stmt = conn.createStatement()) {
             stmt.execute("INSERT OR IGNORE INTO Segreteria (ID, Nome, Password) VALUES (1, 'Segreteria Centrale', 'admin123')");
 
-            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome, ID) VALUES ('GLLLGU03T02A512D', '1234', 'Luigi', 'Galio', 1)");
-            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome, ID) VALUES ('RSSMRA80A01H501U', 'pass1', 'Maria', 'Rossi', 1)");
-            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome, ID) VALUES ('BNCLRD85B02F205V', 'pass2', 'Leonardo', 'Bianchi', 1)");
-            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome, ID) VALUES ('VRDGNN90C03L736W', 'pass3', 'Giovanni', 'Verdi', 1)");
-            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome, ID) VALUES ('NGRFNC88D04M128X', 'pass4', 'Francesco', 'Neri', 1)");
-            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome, ID) VALUES ('GLLSNT92E05E456Y', 'pass5', 'Santo', 'Gallo', 1)");
-            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome, ID) VALUES ('PLMCHR95F06G789Z', 'pass6', 'Chiara', 'Palumbo', 1)");
-            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome, ID) VALUES ('CNTMRC87G07H012A', 'pass7', 'Marco', 'Conti', 1)");
-            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome, ID) VALUES ('FNTGPP91H08I345B', 'pass8', 'Giuseppe', 'Fontana', 1)");
-            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome, ID) VALUES ('LMBRBT89I09J678C', 'pass9', 'Roberto', 'Lombardi', 1)");
+            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome) VALUES ('GLLLGU03T02A512D', '1234', 'Luigi', 'Galio')");
+            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome) VALUES ('RSSMRA80A01H501U', 'pass1', 'Maria', 'Rossi')");
+            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome) VALUES ('BNCLRD85B02F205V', 'pass2', 'Leonardo', 'Bianchi')");
+            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome) VALUES ('VRDGNN90C03L736W', 'pass3', 'Giovanni', 'Verdi')");
+            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome) VALUES ('NGRFNC88D04M128X', 'pass4', 'Francesco', 'Neri')");
+            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome) VALUES ('GLLSNT92E05E456Y', 'pass5', 'Santo', 'Gallo')");
+            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome) VALUES ('PLMCHR95F06G789Z', 'pass6', 'Chiara', 'Palumbo')");
+            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome) VALUES ('CNTMRC87G07H012A', 'pass7', 'Marco', 'Conti')");
+            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome) VALUES ('FNTGPP91H08I345B', 'pass8', 'Giuseppe', 'Fontana')");
+            stmt.execute("INSERT OR IGNORE INTO Docente (CF, Password, Nome, Cognome) VALUES ('LMBRBT89I09J678C', 'pass9', 'Roberto', 'Lombardi')");
 
             stmt.execute("INSERT OR IGNORE INTO Corso (Nome, CFU, Anno) VALUES ('Programmazione 3', 9, 2026)");
             stmt.execute("INSERT OR IGNORE INTO Corso (Nome, CFU, Anno) VALUES ('Basi di Dati', 6, 2026)");

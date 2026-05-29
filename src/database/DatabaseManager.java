@@ -35,9 +35,7 @@ public class DatabaseManager {
                 "CF VARCHAR(16) PRIMARY KEY, " +
                 "Password VARCHAR(255) NOT NULL, " +
                 "Nome VARCHAR(50) NOT NULL, " +
-                "Cognome VARCHAR(50) NOT NULL, " +
-                "ID INTEGER NOT NULL," +
-                "FOREIGN KEY (ID) REFERENCES Segreteria(ID));";
+                "Cognome VARCHAR(50) NOT NULL);";
 
         String sqlCorso = "CREATE TABLE IF NOT EXISTS Corso (" +
                 "Nome VARCHAR(255) PRIMARY KEY, " +
