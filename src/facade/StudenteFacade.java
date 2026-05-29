@@ -84,7 +84,7 @@ public class StudenteFacade {
             }
             return Risultato.toString();
         } catch (SQLException e){
-            return "Non ci sono voti in attesa di accettazione.";
+            return "Non ci sono voti in attesa di essere accettati.";
         } finally {
             conn.close();
         }
@@ -155,7 +155,7 @@ public class StudenteFacade {
             String statoAttuale = rs.getString("Stato");
 
             if (!"In Attesa".equals(statoAttuale)) {
-                return "Voto gia' accettato!";
+                return "Voto gia' accettato!\nIn attesa della verbalizzazione.";
             }
 
             String sqlUpdate = "UPDATE Esito SET Stato = ? WHERE ID = ?";
