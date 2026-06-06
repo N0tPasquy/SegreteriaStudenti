@@ -81,7 +81,7 @@ public class InserisciVotoController {
         ErrorArea.setText("");
 
         try {
-            docenteFacade.inserisciVoto(CFLoggato, matricola, corso, data.toString(), votoFinale, lode, assente);
+            docenteFacade.inserisciVoto(CFLoggato, matricola, corso, data.toString(), votoFinale, assente, lode);
 
             // Se lo studente risulta assente, anche se il docente inserisce per sbaglio un voto, il backend lo capisce
             // e ignora del tutto il voto, inserendo null come valore.

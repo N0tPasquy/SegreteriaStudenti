@@ -70,17 +70,24 @@ public class SegreteriaController {
         }
     }
 
-    // Dall lista di StudneteDTO ritorna una stringa con tutti gli studenti trovati
+    // Dall lista di StudneteDTO ritorna una stringa con tutte le informazioni degli studenti trovati
     private String formattaRisultati(List<StudenteDTO> risultati){
         if(risultati.isEmpty()){
-            return "Nessuno studente trovato con questi criteri";
+            return "Nessuno studente trovato con questi criteri.";
         }
 
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < risultati.size(); i++){
-            StudenteDTO studente = risultati.get(i);
-            sb.append("- Trovato: ").append(studente.getNome()).append(" ").append(studente.getCognome()).append(", con matricola ").append(studente.getMatricola()).append(".\n");
+        for (StudenteDTO studente : risultati) {
+            sb.append("══════════════════════════════════════\n");
+            sb.append("  Nome:        ").append(studente.getNome()).append(" ").append(studente.getCognome()).append("\n");
+            sb.append("  Matricola:   ").append(studente.getMatricola()).append("\n");
+            sb.append("  Data nasc.:  ").append(studente.getDataNascita()).append("\n");
+            sb.append("  Residenza:   ").append(studente.getResidenza()).append("\n");
+            sb.append("  Tasse:       ").append(studente.isTassePagate() ? "✔ Pagate" : "✘ Non pagate").append("\n");
+            sb.append("  Piano studi: ").append(studente.getPianoStudi()).append("\n");
+            sb.append("  Voti verb.:  ").append(studente.getVotiVerbalizzati()).append("\n");
         }
+        sb.append("══════════════════════════════════════\n");
 
         return sb.toString();
     }
