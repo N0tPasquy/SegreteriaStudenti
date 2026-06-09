@@ -8,6 +8,9 @@ import javafx.scene.control.TextField;
 
 import java.sql.SQLException;
 
+/**
+ * Controller per la finestra modale di accettazione/rifiuto voto.
+ */
 public class AccettaVotoController {
     @FXML private TextField NomeCorso;
     @FXML private  Label ErrorArea;
@@ -21,6 +24,10 @@ public class AccettaVotoController {
         ErrorArea.setText("");
     }
 
+    /**
+     * Riceve la matricola dello studente loggato.
+     * @param Matricola matricola
+     */
     public void initData(String Matricola){
         MatricolaLoggata = Matricola;
     }
@@ -35,7 +42,11 @@ public class AccettaVotoController {
         Scelta(false, event);
     }
 
-    // Metodo unico che gestisce sia accetta che rifiuta del voto
+    /**
+     * Metodo unico che gestisce sia accetta che rifiuta del voto
+     * @param scelta scelta ricavata dai pulsanti
+     * @param event evento del pulsante
+     */
     private void Scelta(boolean scelta, ActionEvent event){
         String Corso = NomeCorso.getText();
 

@@ -10,6 +10,10 @@ import javafx.scene.control.TextField;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+/**
+ * Controller per la finestra modale di prenotazione di un esame.
+ */
+
 public class PrenotaEsameController {
     @FXML private TextField NomeCorso;
     @FXML private DatePicker DataEsame;
@@ -24,9 +28,17 @@ public class PrenotaEsameController {
         ErrorArea.setText("");
     }
 
+    /**
+     * Riceve la matricola dello studente loggato dalla dashboard.
+     * @param Matricola matricola dello studente
+     */
     public void initData(String Matricola) {
         MatricolaLoggata = Matricola;
     }
+
+    /**
+     * Gestisce la prenotazione all'appello.
+     */
 
     @FXML
     public void Prenotati(ActionEvent event){

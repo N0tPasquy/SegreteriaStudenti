@@ -7,8 +7,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-// Data Access Object
+/**
+ * Data Access Object per l'autenticazione.
+ * Cerca un utente in tutte le tabelle (Studente, Docente, Segreteria) per username.
+ */
 public class AuthDAO {
+
+    /**
+     * Trova un utente nel database a partire dall'username (matricola/CF/ID).
+     * @param Username identificativo dell'utente
+     * @return CredenzialiDTO con ruolo e password, oppure null se non trovato
+     * @throws SQLException se si verifica un errore DB
+     */
     public CredenzialiDTO trovaUtente(String Username) throws SQLException {
         Connection conn = DatabaseManager.getInstance().getConnection();
 

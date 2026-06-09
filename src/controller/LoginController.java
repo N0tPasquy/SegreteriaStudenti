@@ -19,6 +19,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Controller per la schermata di login.
+ */
 public class LoginController {
 
     // Con questi "collego" le funzioni della GUI con quelle della logica implementata fino ad ora
@@ -26,6 +29,11 @@ public class LoginController {
     @FXML private PasswordField PasswordField;
     @FXML private Label ErrorLabel;
 
+    /**
+     * Gestisce il tentativo di login, applicando la catena di responsabilità.
+     * @param event evento del pulsante
+     * @throws SQLException se si verifica un errore DB
+     */
     @FXML
     public void gestisciLogin(ActionEvent event) throws SQLException {
         String Username = UsernameField.getText();

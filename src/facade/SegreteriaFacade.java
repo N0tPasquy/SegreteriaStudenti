@@ -7,8 +7,22 @@ import model.StudenteDTO;
 import java.sql.*;
 import java.util.List;
 
+/**
+ * Facade per le operazioni della segreteria (iscrizione studenti, gestione piano studi, verbalizzazione).
+ */
+
 public class SegreteriaFacade {
 
+    /**
+     * Iscrive un nuovo studente nel sistema.
+     * @param Matricola matricola dello studente
+     * @param Password password in chiaro
+     * @param Nome nome
+     * @param Cognome cognome
+     * @param Residenza residenza
+     * @param DataNascita data di nascita (java.sql.Date)
+     * @throws SQLException se la matricola esiste già o errore DB
+     */
     public void iscriviStudente(String Matricola, String Password, String Nome, String Cognome, String Residenza, Date DataNascita) throws SQLException {
         String sql = "INSERT INTO Studente (Matricola, Password, Nome, Cognome, Residenza, DataNascita) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -32,10 +46,23 @@ public class SegreteriaFacade {
         }
     }
 
+    /**
+     * Cerca studenti usando la strategia fornita (per matricola o per nome/cognome).
+     * @param strategia strategia di ricerca concreta
+     * @param input parametro di ricerca
+     * @return lista di DTO degli studenti trovati
+     * @throws SQLException se la query fallisce
+     */
     public List<StudenteDTO> visualizzaStudente(SearchStrategy strategia, String input) throws SQLException{
         return strategia.cerca(input);
     }
 
+    /**
+     * Aggiunge un corso al piano di studi dello studente.
+     * @param Matricola matricola dello studente
+     * @param NomeCorso nome del corso da aggiungere
+     * @throws SQLException se il corso non esiste o è già presente nel piano
+     */
     public void aggiungiCorso(String Matricola, String NomeCorso) throws SQLException {
 
         String sqlCheck = "SELECT Nome FROM Corso WHERE Nome = ?";
@@ -63,6 +90,12 @@ public class SegreteriaFacade {
         }
     }
 
+    /**
+     * Rimuove un corso dal piano di studi dello studente.
+     * @param Matricola matricola dello studente
+     * @param NomeCorso nome del corso da rimuovere
+     * @throws SQLException se il corso non era presente nel piano
+     */
     public void eliminaCorso(String Matricola, String NomeCorso) throws SQLException {
         String sql = "DELETE FROM DeveSeguire WHERE MatricolaStudente = ? AND NomeCorso = ?";
 
@@ -84,6 +117,12 @@ public class SegreteriaFacade {
         }
     }
 
+    /**
+     * Cerca i voti già accettati (in attesa di verbalizzazione) per uno studente.
+     * @param Matricola matricola dello studente
+     * @return stringa con l'elenco dei voti accettati
+     * @throws SQLException se la query fallisce
+     */
     public String cercaVotiAccettati(String Matricola) throws SQLException{
         // Uso StringBuilder in moda da concatenare ogni occorrenza della query in un unica stringa
         StringBuilder risultati = new StringBuilder();
@@ -107,6 +146,11 @@ public class SegreteriaFacade {
         return risultati.toString();
     }
 
+    /**
+     * Verbalizza (cambia stato da 'Accettato' a 'Verbalizzato') tutti i voti accettati dello studente.
+     * @param Matricola matricola dello studente
+     * @throws SQLException se non ci sono voti da verbalizzare
+     */
     public void verbalizzaTutti(String Matricola) throws SQLException{
         String sql = "UPDATE Esito SET Stato = 'Verbalizzato' WHERE Matricola = ? AND Stato = 'Accettato'";
 

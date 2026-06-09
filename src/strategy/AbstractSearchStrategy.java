@@ -10,14 +10,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * Classe che fornisce il metodo template "eseguiRicerca" che le sottoclassi concrete riutilizzano,
- * variando solo la query SQL e i parametri.
+/**
+ * Classe astratta che implementa il metodo template per l'esecuzione di una ricerca.
+ * Le sottoclassi devono fornire la query SQL e i parametri.
  */
 public abstract class AbstractSearchStrategy implements SearchStrategy {
-    /*
-     * Il metodo accetta un numero variabile di parametri String (String...) in modo da
-     * supportare sia la ricerca per matricola (1 parametro) sia per nome+cognome (2 parametri).
+    /**
+     * Metodo template che esegue una query SQL con i parametri forniti.
+     * @param sql query SQL con placeholder ?
+     * @param Parametri valori da sostituire nei placeholder
+     * @return lista di DTO degli studenti trovati
+     * @throws SQLException se la query fallisce
      */
     protected List<StudenteDTO> eseguiRicerca(String sql, String... Parametri) throws SQLException {
         List<StudenteDTO> Risultati = new ArrayList<>();

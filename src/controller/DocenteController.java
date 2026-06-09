@@ -16,6 +16,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * Controller della dashboard del docente.
+ */
 public class DocenteController {
     @FXML private TextField NomeCorso;
     @FXML private DatePicker DataAppello;
@@ -29,10 +32,17 @@ public class DocenteController {
         docenteFacade = new DocenteFacade();
     }
 
+    /**
+     * Riceve il CF del docente loggato.
+     * @param CF codice fiscale
+     */
     public void initData(String CF){
         this.CFLoggato = CF;
     }
 
+    /**
+     * Metodo che mostra tutti gli studenti prenotati in base al nome di un esame e alla data in cui si tiene l'appello
+     */
     @FXML
     public void cercaPrenotati(ActionEvent event){
         String Corso = NomeCorso.getText();

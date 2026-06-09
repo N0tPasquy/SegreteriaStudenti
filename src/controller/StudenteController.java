@@ -13,6 +13,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.SQLException;
 
+/**
+ * Controller della dashboard dello studente.
+ */
 public class StudenteController {
     @FXML private TextArea AreaRisultati;
 
@@ -24,6 +27,10 @@ public class StudenteController {
         studenteFacade = new StudenteFacade();
     }
 
+    /**
+     * Riceve la matricola dello studente loggato.
+     * @param Matricola matricola
+     */
     public void initData(String Matricola){
             this.MatricolaLoggata = Matricola;
     }

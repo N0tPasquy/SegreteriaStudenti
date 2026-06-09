@@ -12,6 +12,9 @@ import javafx.scene.control.TextField;
 
 import java.time.LocalDate;
 
+/**
+ * Controller per la finestra modale di inserimento di un nuovo studente.
+ */
 public class InserisciStudenteController {
     @FXML private TextField NewMatricola;
     @FXML private TextField NewNome;
@@ -29,6 +32,9 @@ public class InserisciStudenteController {
         ErrorArea.setText("");
     }
 
+    /**
+     * Gestisce l'iscrizione di un nuovo studente.
+     */
     @FXML
     public void iscriviStudente(ActionEvent event){
         String Matricola = NewMatricola.getText();

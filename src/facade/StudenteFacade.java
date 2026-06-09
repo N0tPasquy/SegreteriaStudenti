@@ -4,9 +4,18 @@ import database.DatabaseManager;
 
 import java.sql.*;
 
+/**
+        * Facade per le operazioni dello studente (piano studi, appelli, prenotazione, gestione voti).
+        */
+
 public class StudenteFacade {
 
-    // Visualizza il piano di studi
+    /**
+     * Restituisce il piano di studi formattato dello studente.
+     * @param Matricola matricola dello studente
+     * @return stringa con l'elenco dei corsi
+     * @throws SQLException se si verifica un errore DB
+     */
     public String vediPianoStudi(String Matricola) throws SQLException {
         String sql = "SELECT C.Nome, C.CFU, C.Anno FROM DeveSeguire D JOIN Corso C ON D.NomeCorso = C.Nome WHERE D.MatricolaStudente = ?";
         Connection conn = DatabaseManager.getInstance().getConnection();
@@ -32,13 +41,18 @@ public class StudenteFacade {
         }
     }
 
-    // Seleziona solo gli appelli dei corsi presenti nel piano di studi di uno studente
+    /**
+     * Mostra gli appelli dei corsi presenti nel piano di studi dello studente.
+     * @param Matricola matricola dello studente
+     * @return stringa con gli appelli disponibili
+     * @throws SQLException se si verifica un errore DB
+     */
     public String visualizzaAppelli(String Matricola) throws SQLException {
         String sql = "SELECT A.NomeCorso, A.Data FROM Appello A " +
                 "JOIN DeveSeguire D ON A.NomeCorso = D.NomeCorso " +
                 "WHERE D.MatricolaStudente = ?";
 
-        Connection conn = database.DatabaseManager.getInstance().getConnection();
+        Connection conn = DatabaseManager.getInstance().getConnection();
         StringBuilder Risultato = new StringBuilder();
 
         try {
@@ -64,7 +78,12 @@ public class StudenteFacade {
         }
     }
 
-    // Metodo per trovare i voti in attesa di essere accettati
+    /**
+     * Restituisce i voti in attesa di accettazione per lo studente.
+     * @param Matricola matricola dello studente
+     * @return stringa con i voti in attesa
+     * @throws SQLException se si verifica un errore DB
+     */
     public String visualizzaVotiAttesa(String Matricola)throws SQLException{
         String sql = "SELECT NomeCorso, Voto, Lode FROM Esito WHERE Matricola = ? AND Stato = 'In Attesa'";
         StringBuilder Risultato = new StringBuilder();
@@ -90,7 +109,13 @@ public class StudenteFacade {
         }
     }
 
-    // Funzione che permette di prenotarsi ad un appello
+    /**
+     * Prenota lo studente a un appello (se il corso è nel suo piano di studi e l'appello esiste).
+     * @param Matricola matricola dello studente
+     * @param NomeCorso nome del corso
+     * @param DataAppello data dell'appello (formato yyyy-mm-dd)
+     * @throws SQLException se il corso non è nel piano, l'appello non esiste o errore DB
+     */
     public void prenotaAppello(String Matricola, String NomeCorso, String DataAppello) throws SQLException {
         Connection conn = DatabaseManager.getInstance().getConnection();
 
@@ -128,7 +153,14 @@ public class StudenteFacade {
         }
     }
 
-    // Metodo per accettare o rifiutare il voto di un esame, integrato con lo state pattern
+    /**
+     * Accetta o rifiuta un voto in attesa.
+     * @param matricola matricola dello studente
+     * @param nomeCorso nome del corso
+     * @param accettaVoto true = accetta, false = rifiuta
+     * @return messaggio di conferma
+     * @throws SQLException se il voto non esiste o errore DB
+     */
     public String gestisciVoto(String matricola, String nomeCorso, boolean accettaVoto) throws SQLException {
         String sqlSelect = "SELECT ID, Stato FROM Esito WHERE NomeCorso = ? AND Matricola = ?";
         String nuovoStato = "";
@@ -138,7 +170,7 @@ public class StudenteFacade {
             nuovoStato = "Rifiutato";
         }
 
-        Connection conn = database.DatabaseManager.getInstance().getConnection();
+        Connection conn = DatabaseManager.getInstance().getConnection();
 
         try {
             PreparedStatement stmtSelect = conn.prepareStatement(sqlSelect);

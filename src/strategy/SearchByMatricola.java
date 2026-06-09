@@ -5,7 +5,7 @@ import model.StudenteDTO;
 import java.sql.SQLException;
 import java.util.List;
 
-/*
+/**
  * Strategia concreta: ricerca uno studente per matricola.
  * La query effettua un JOIN con DeveSeguire/Corso per il piano di studi e con la tabella Esito per i voti verbalizzati,
  * SQLite aggrega le righe multiple in una stringa usando GROUP_CONCAT(DISTINCT ...)

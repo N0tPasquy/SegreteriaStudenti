@@ -11,6 +11,9 @@ import javafx.scene.control.TextField;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+/**
+ * Controller per la finestra modale di inserimento voto (docente).
+ */
 public class InserisciVotoController {
     @FXML private TextField Matricola;
     @FXML private TextField NomeCorso;
@@ -29,10 +32,17 @@ public class InserisciVotoController {
         ErrorArea.setText("");
     }
 
+    /**
+     * Riceve il CF del docente loggato.
+     * @param CF codice fiscale
+     */
     public void initData(String CF){
         this.CFLoggato = CF;
     }
 
+    /**
+     * Invia il voto (o l'assenza) per uno studente.
+     */
     @FXML
     public void InviaVoto(ActionEvent event){
         String matricola = Matricola.getText();
@@ -49,7 +59,7 @@ public class InserisciVotoController {
 
         int votoFinale = 0;
 
-        // Controllo se "Assente" sia spuntato
+        // Controllo se "Assente" è spuntato
         if (!assente){
             // Se "Assente" non è spuntata allora deve esserci un voto
             if(voto == null){
@@ -62,7 +72,7 @@ public class InserisciVotoController {
                 votoFinale = Integer.parseInt(voto); // Converto il voto da String a int
 
                 if(votoFinale < 18 || votoFinale > 30){
-                    mostraErrore("Il voto deve essere tra 18 e 30.");
+                    mostraErrore("Il voto deve essere compreso tra 18 e 30.");
                     return;
                 }
 

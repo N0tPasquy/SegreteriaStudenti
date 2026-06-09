@@ -4,6 +4,9 @@ import model.CredenzialiDTO;
 
 import java.sql.SQLException;
 
+/**
+ * Handler che verifica la correttezza della password.
+ */
 public class PasswordHandler extends LoginHandler{
     @Override
     public CredenzialiDTO handle(String Username, String PasswordInput, CredenzialiDTO Utente) throws SQLException{

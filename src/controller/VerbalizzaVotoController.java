@@ -8,6 +8,9 @@ import javafx.scene.control.TextField;
 
 import java.sql.SQLException;
 
+/**
+ * Controller per la finestra modale di verbalizzazione dei voti (segreteria).
+ */
 public class VerbalizzaVotoController {
     @FXML private TextField VerbalizzaMatricola;
     @FXML private TextArea AreaVoti;
@@ -19,7 +22,9 @@ public class VerbalizzaVotoController {
         segreteriaFacade = new SegreteriaFacade();
     }
 
-    // Funzione collegata al bottone "Cerca Voti" che mostra i risultati nell'area di testo
+    /**
+     * Metodo che visualizza i voti in attesa di una matricola
+     */
     @FXML
     public void cercaVotiMatricola(ActionEvent event){
         String Matricola = VerbalizzaMatricola.getText();
@@ -38,6 +43,9 @@ public class VerbalizzaVotoController {
         }
     }
 
+    /**
+     * Metodo che verbalizza tutti i voti della matricola inserita nell'area di testo
+     */
     // Funzione collegata al bottone "Verbalizza Tutti"
     @FXML
     public void VerbalizzaVoti(ActionEvent event){

@@ -9,6 +9,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Classe principale dell'applicazione JavaFX.
+ * Inizializza il database e carica la schermata di login.
+ */
 public class Main extends Application {
 
     @Override

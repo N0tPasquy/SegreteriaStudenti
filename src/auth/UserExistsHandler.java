@@ -5,6 +5,9 @@ import model.CredenzialiDTO;
 
 import java.sql.SQLException;
 
+/**
+ * Handler che verifica l'esistenza dell'utente nel database.
+ */
 public class UserExistsHandler extends LoginHandler {
     private final AuthDAO authDAO;
 

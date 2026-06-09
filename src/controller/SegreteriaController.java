@@ -21,6 +21,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Controller della dashboard della segreteria.
+ */
 public class SegreteriaController {
     @FXML private RadioButton radioMatricola;
     @FXML private RadioButton radioNomeCognome;
@@ -42,7 +45,10 @@ public class SegreteriaController {
         radioMatricola.setSelected(true);
     }
 
-    // Cerco lo studente tenendo conto del radio button, che sceglie la strategia
+    /**
+     * Cerco lo studente tenendo conto del radio button, che sceglie la strategia
+     * @throws SQLException se la query fallisce
+     */
     @FXML
     public void cercaStudente(ActionEvent event) throws SQLException {
         String parametro = campoRicerca.getText();
@@ -70,7 +76,11 @@ public class SegreteriaController {
         }
     }
 
-    // Dall lista di StudneteDTO ritorna una stringa con tutte le informazioni degli studenti trovati
+    /**
+     * Metodo di supporto per formattare i risultati della lista StudneteDTO
+     * @param risultati Lista di StudenteDTO
+     * @return stringa formattata con tutti gli studenti trovati
+     */
     private String formattaRisultati(List<StudenteDTO> risultati){
         if(risultati.isEmpty()){
             return "Nessuno studente trovato con questi criteri.";

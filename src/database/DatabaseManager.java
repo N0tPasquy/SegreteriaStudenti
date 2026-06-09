@@ -5,6 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Gestisce la connessione al database SQLite.
+ * Implementa il pattern Singleton.
+ * NOTA: getConnection() restituisce una NUOVA connessione ogni volta – non condivide una connessione unica.
+ */
+
 public class DatabaseManager {
     private static DatabaseManager instance;
     private static final String URL = "jdbc:sqlite:segreteria.db";
@@ -13,15 +19,23 @@ public class DatabaseManager {
         creaTabelle();
     }
 
-    public static DatabaseManager getInstance(){
+    /**
+     * Restituisce l'unica istanza del DatabaseManager (thread-safe).
+     * @return istanza singleton
+     */
+    public static synchronized DatabaseManager getInstance(){
         if(instance == null){
             instance = new DatabaseManager();
         }
         return instance;
     }
 
-    // Genera una nuova connessione ogni volta che viene chiamato!
-    public Connection getConnection() throws SQLException {
+    /**
+            * Crea e restituisce una NUOVA connessione al database.
+            * @return una nuova connessione SQLite
+     * @throws SQLException se la connessione non può essere creata
+     */
+    public  Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL);
     }
 

@@ -10,6 +10,9 @@ import javafx.scene.control.TextField;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
+/**
+ * Controller per la finestra modale di creazione di un nuovo appello.
+ */
 public class CreaAppelloController {
     @FXML private TextField NomeCorso;
     @FXML private DatePicker DataAppello;
@@ -24,6 +27,10 @@ public class CreaAppelloController {
         ErrorCode.setText("");
     }
 
+    /**
+     * Riceve il CF del docente loggato.
+     * @param CF codice fiscale
+     */
     public void initData(String CF){
         this.CFLoggato = CF;
     }

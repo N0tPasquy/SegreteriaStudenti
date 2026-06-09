@@ -3,11 +3,22 @@ package facade;
 import database.DatabaseManager;
 import java.sql.*;
 
+/**
+ * Facade per le operazioni del docente (creazione appelli, inserimento voti, visualizzazione prenotati).
+ */
+
 public class DocenteFacade {
+
+    /**
+     * Crea un nuovo appello per un corso di cui il docente è titolare.
+     * @param CFDocente codice fiscale del docente
+     * @param NomeCorso nome del corso
+     * @param Data data dell'appello (yyyy-mm-dd)
+     * @throws SQLException se il docente non tiene il corso o errore DB
+     */
 
     public void creaAppello(String CFDocente, String NomeCorso, String Data) throws SQLException {
 
-        // Controllo che il docente appartenga al corso tramite un metodo apposito
         if(!cekcCorso(CFDocente, NomeCorso)){
             throw new SQLException("Impossibile creare l'appello:\nNon appartieni al corso '" + NomeCorso + "'.");
         }
@@ -16,7 +27,7 @@ public class DocenteFacade {
         String sqlInsert = "INSERT INTO Appello (NomeCorso, Data) VALUES (?, ?)";
         Connection conn = DatabaseManager.getInstance().getConnection();
 
-        // Procedo con la creazione dell'appello tramite statement
+        // Creazione dell'appello tramite statement
         try (PreparedStatement stmtInsert = conn.prepareStatement(sqlInsert)) {
             stmtInsert.setString(1, NomeCorso);
             stmtInsert.setString(2, Data);
@@ -29,7 +40,14 @@ public class DocenteFacade {
         }
     }
 
-    // Visualizza la lista degli studenti prenotati ad un appello
+    /**
+     * Restituisce l'elenco degli studenti prenotati a un dato appello.
+     * @param CFDocente codice fiscale del docente
+     * @param NomeCorso nome del corso
+     * @param DataAppello data dell'appello
+     * @return stringa formattata con l'elenco degli studenti
+     * @throws SQLException se il docente non tiene il corso o errore DB
+     */
     public String visualizzaPrenotati(String CFDocente, String NomeCorso, String DataAppello) throws SQLException {
 
         if(!cekcCorso(CFDocente, NomeCorso)){
@@ -62,7 +80,6 @@ public class DocenteFacade {
             conn.close();
         }
 
-        // Controllo che la stringa Risultati non sia vuota
         if (Risultati.length() == 0) {
             return "Nessuno studente prenotato all'appello di:\n" + NomeCorso + "\ndel " + DataAppello + ".";
         }
@@ -70,6 +87,17 @@ public class DocenteFacade {
         return Risultati.toString();
     }
 
+    /**
+     * Inserisce un voto (o registra un'assenza) per uno studente a un determinato appello.
+     * @param CFDocente codice fiscale del docente
+     * @param Matricola matricola dello studente
+     * @param NomeCorso nome del corso
+     * @param DataAppello data dell'appello
+     * @param Voto voto numerico (ignorato se assente = true)
+     * @param assente true se lo studente è assente
+     * @param Lode true se viene concessa la lode (solo con voto 30)
+     * @throws SQLException se il docente non tiene il corso o errore DB
+     */
     public void inserisciVoto(String CFDocente, String Matricola, String NomeCorso, String DataAppello, int Voto, boolean assente, boolean Lode) throws SQLException {
 
         if(!cekcCorso(CFDocente, NomeCorso)){
@@ -125,7 +153,7 @@ public class DocenteFacade {
             conn.close();
         }
 
-        // Se non entra nell' if allora ci sono risultati il docente appartiene al corso, quindi ritorno true
+        // Se non entra nell' if allora ci sono risultati, il docente appartiene al corso, quindi ritorno true
         return true;
     }
 }

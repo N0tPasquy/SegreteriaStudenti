@@ -8,6 +8,9 @@ import javafx.scene.control.TextField;
 
 import java.sql.SQLException;
 
+/**
+ * Controller per la finestra modale di modifica del piano di studi (aggiunta/rimozione corsi).
+ */
 public class CambiaPianoStudiController {
     @FXML private TextField EditMatricola;
     @FXML private TextField EditCorso;
@@ -23,6 +26,9 @@ public class CambiaPianoStudiController {
         ErrorArea.setText("");
     }
 
+    /**
+     * Metodo che aggiunge un corso al piano di studi di uno studente
+     */
     @FXML
     public void AggiungiCorso(ActionEvent event){
         String Matricola = EditMatricola.getText();
@@ -40,6 +46,9 @@ public class CambiaPianoStudiController {
         }
     }
 
+    /**
+     * Metodo che elimina un corso dal piano di studi di uno studente
+     */
     @FXML
     public void EliminaCorso(ActionEvent event){
         String Matricola = EditMatricola.getText();
@@ -57,7 +66,12 @@ public class CambiaPianoStudiController {
         }
     }
 
-    // Qui ci sono i metodi di supporto, validazione dei campi e mostra l'errore/successo nella lable nascosta
+    /**
+     * Metodo di supporto per controllare i campi inseriti
+     * @param Matricola matricola a cio si vuole modificare il piano di studi
+     * @param Corso corso da aggiungere o eliminare
+     * @return false se non sono compilati entrambi i campi, altrimenti true
+     */
     private boolean validaCampi(String Matricola, String Corso){
         if(Matricola.trim().isEmpty() || Corso.trim().isEmpty()){
             mostraErrore("Compila entrambi i campi");
