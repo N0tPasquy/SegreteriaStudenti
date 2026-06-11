@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * Classe principale dell'applicazione JavaFX.
+ * Classe main dell'applicazione JavaFX.
  * Inizializza il database e carica la schermata di login.
  */
 public class Main extends Application {
@@ -84,10 +84,10 @@ public class Main extends Application {
             stmt.execute("INSERT OR IGNORE INTO Appello (NomeCorso, Data) VALUES ('Programmazione 1', '2026-06-18')");
 
             stmt.execute("INSERT OR IGNORE INTO Esito (ID, Voto, Lode, Stato, Tipo, NomeCorso, Data, Matricola) VALUES (1, 28, 0, 'In Attesa', 'Orale', 'Programmazione 3', '2026-05-10', 'MAT001')");
-            stmt.execute("INSERT OR IGNORE INTO Esito (ID, Voto, Lode, Stato, Tipo, NomeCorso, Data, Matricola) VALUES (2, 30, 1, 'In Attesa', 'Scritto', 'Basi di Dati', '2026-06-15', 'MAT001')");
+            stmt.execute("INSERT OR IGNORE INTO Esito (ID, Voto, Lode, Stato, Tipo, NomeCorso, Data, Matricola) VALUES (2, 30, 1, 'In Attesa', 'Orale', 'Basi di Dati', '2026-06-15', 'MAT001')");
             stmt.execute("INSERT OR IGNORE INTO Esito (ID, Voto, Lode, Stato, Tipo, NomeCorso, Data, Matricola) VALUES (3, 0, 0, 'Assente', 'Orale', 'Ingegneria del Software', '2026-07-20', 'MAT001')");
             stmt.execute("INSERT OR IGNORE INTO Esito (ID, Voto, Lode, Stato, Tipo, NomeCorso, Data, Matricola) VALUES (4, 25, 0, 'Accettato', 'Orale', 'Ingegneria del Software', '2026-07-20', 'MAT001')");
-            stmt.execute("INSERT OR IGNORE INTO Esito (ID, Voto, Lode, Stato, Tipo, NomeCorso, Data, Matricola) VALUES (5, 22, 0, 'In Attesa', 'Scritto', 'Programmazione 3', '2026-06-20', 'MAT002')");
+            stmt.execute("INSERT OR IGNORE INTO Esito (ID, Voto, Lode, Stato, Tipo, NomeCorso, Data, Matricola) VALUES (5, 22, 0, 'In Attesa', 'Orale', 'Programmazione 3', '2026-06-20', 'MAT002')");
 
             stmt.execute("INSERT OR IGNORE INTO Tiene (CFDocente, NomeCorso) VALUES ('GLLLGU03T02A512D', 'Programmazione 3')");
             stmt.execute("INSERT OR IGNORE INTO Tiene (CFDocente, NomeCorso) VALUES ('RSSMRA80A01H501U', 'Basi di Dati')");

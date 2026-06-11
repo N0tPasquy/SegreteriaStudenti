@@ -45,7 +45,7 @@ public class InserisciStudenteController {
         // Traduco la data di nascita da javaFX in data java
         LocalDate DataNascita = NewDataNascita.getValue();
 
-        if(Matricola == null|| Nome == null || Cognome == null|| Residenza == null || DataNascita == null){
+        if(Matricola.trim().isEmpty()|| Nome.trim().isEmpty() || Cognome.trim().isEmpty()|| Residenza.trim().isEmpty() || DataNascita == null){
             mostraErrore("Compila tutti i campi prima di procedere!");
             return;
         }

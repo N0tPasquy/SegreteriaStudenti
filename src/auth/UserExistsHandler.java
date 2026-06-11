@@ -20,7 +20,7 @@ public class UserExistsHandler extends LoginHandler {
         CredenzialiDTO UtenteTrovato = authDAO.trovaUtente(Username);
 
         if(UtenteTrovato == null){
-            System.out.println("Eorre: Utente non trovato nel DB.");
+            System.out.println("Erorre: Utente non trovato nel DB.");
             return null;
         }
 

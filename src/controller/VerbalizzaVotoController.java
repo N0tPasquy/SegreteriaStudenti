@@ -29,7 +29,7 @@ public class VerbalizzaVotoController {
     public void cercaVotiMatricola(ActionEvent event){
         String Matricola = VerbalizzaMatricola.getText();
 
-        if(Matricola == null || Matricola.trim().isEmpty()){
+        if(Matricola.trim().isEmpty()){
             mostraErrore("Inserisci una matricola prima di cercare.");
             return;
         }

@@ -50,7 +50,7 @@ public class AccettaVotoController {
     private void Scelta(boolean scelta, ActionEvent event){
         String Corso = NomeCorso.getText();
 
-        if(Corso == null || Corso.trim().isEmpty()){
+        if(Corso.trim().isEmpty()){
             mostraErrore("Inserisci il nome del corso!");
             NomeCorso.clear();
             return;

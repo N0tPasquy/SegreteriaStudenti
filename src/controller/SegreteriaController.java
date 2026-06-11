@@ -53,7 +53,7 @@ public class SegreteriaController {
     public void cercaStudente(ActionEvent event) throws SQLException {
         String parametro = campoRicerca.getText();
 
-        if(parametro == null || parametro.trim().isEmpty()){
+        if(parametro.trim().isEmpty()){
             areaRisultati.setText("Errore: Inserisci un parametro di ricerca valido.\n  Usa Nome Cognome, con le iniziali in maiuscolo");
             return;
         }

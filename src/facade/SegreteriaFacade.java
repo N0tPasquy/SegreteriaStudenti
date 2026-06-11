@@ -39,8 +39,6 @@ public class SegreteriaFacade {
             stmt.executeUpdate();
 
             System.out.println("Successo: Studente " + Nome + " " + Cognome + " iscritto correttamente!");
-        } catch (SQLException e) {
-            throw e;
         } finally {
             conn.close();
         }
@@ -85,8 +83,6 @@ public class SegreteriaFacade {
                 // Se questo Corso è gia' presente nel piano di studi scatta l'eccezione per violazione di primary key
                 stmt.executeUpdate();
             }
-        } catch (SQLException e){
-            throw e;
         }
     }
 
@@ -109,11 +105,9 @@ public class SegreteriaFacade {
             int righeModificate = stmt.executeUpdate();
 
             // Se le righe modificare sono 0, non e' successo nulla, quindi lo studente non aveva il corso assegnato
-            if(righeModificate == 0){
+            if (righeModificate == 0) {
                 throw new SQLException("Il corso non era presente\nnel piano di studi!");
             }
-        } catch (SQLException e) {
-            throw e;
         }
     }
 
@@ -139,7 +133,7 @@ public class SegreteriaFacade {
             }
         }
 
-        if (risultati.length() == 0){
+        if (risultati.isEmpty()){
             return "Nessun voto in attesa di verbalizzazione";
         }
 

@@ -54,7 +54,7 @@ public class DocenteController {
         }
 
         try {
-            // Richiamo il facade per ottenere la lista dei prenotati in base all'imput
+            // Richiamo il facade per ottenere la lista dei prenotati in base all'input
             String Risultati = docenteFacade.visualizzaPrenotati(CFLoggato, Corso, Data.toString());
             AreaPrenotati.setStyle("-fx-text-fill: black;"); // resetto il colore del testo se prima c'era un errore
             AreaPrenotati.setText(Risultati);

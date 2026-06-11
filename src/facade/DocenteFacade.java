@@ -19,7 +19,7 @@ public class DocenteFacade {
 
     public void creaAppello(String CFDocente, String NomeCorso, String Data) throws SQLException {
 
-        if(!cekcCorso(CFDocente, NomeCorso)){
+        if(!ceckCorso(CFDocente, NomeCorso)){
             throw new SQLException("Impossibile creare l'appello:\nNon appartieni al corso '" + NomeCorso + "'.");
         }
 
@@ -32,9 +32,7 @@ public class DocenteFacade {
             stmtInsert.setString(1, NomeCorso);
             stmtInsert.setString(2, Data);
 
-            stmtInsert.executeUpdate();}
-        catch (SQLException e) {
-            throw e;
+            stmtInsert.executeUpdate();
         } finally {
             conn.close();
         }
@@ -50,8 +48,8 @@ public class DocenteFacade {
      */
     public String visualizzaPrenotati(String CFDocente, String NomeCorso, String DataAppello) throws SQLException {
 
-        if(!cekcCorso(CFDocente, NomeCorso)){
-            throw new SQLException("Impossibile creare l'appello:\nNon appartieni al corso '" + NomeCorso + "'.");
+        if(!ceckCorso(CFDocente, NomeCorso)){
+            throw new SQLException("Impossibile visualizzare i prenotati:\nnon risulti essere il titolare del corso selezionato.");
         }
 
         String sql = "SELECT S.Matricola, S.Nome, S.Cognome " +
@@ -73,14 +71,11 @@ public class DocenteFacade {
                     Risultati.append("- ").append(rs.getString("Nome")).append(" ").append(rs.getString("Cognome")).append(" (Matricola: ").append(rs.getString("Matricola")).append(")\n");
                 }
             }
-        }
-        catch (SQLException e) {
-            throw e;
         } finally {
             conn.close();
         }
 
-        if (Risultati.length() == 0) {
+        if (Risultati.isEmpty()) {
             return "Nessuno studente prenotato all'appello di:\n" + NomeCorso + "\ndel " + DataAppello + ".";
         }
 
@@ -100,8 +95,8 @@ public class DocenteFacade {
      */
     public void inserisciVoto(String CFDocente, String Matricola, String NomeCorso, String DataAppello, int Voto, boolean assente, boolean Lode) throws SQLException {
 
-        if(!cekcCorso(CFDocente, NomeCorso)){
-            throw new SQLException("Impossibile creare l'appello:\nNon appartieni al corso '" + NomeCorso + "'.");
+        if(!ceckCorso(CFDocente, NomeCorso)){
+            throw new SQLException("Impossibile inserire il voto:\nNon appartieni al corso '" + NomeCorso + "'.");
         }
 
         String sql = "INSERT INTO Esito (Voto, Lode, Stato, Tipo, Matricola, NomeCorso, Data) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -126,15 +121,12 @@ public class DocenteFacade {
             stmt.setString(7, DataAppello);
 
             stmt.executeUpdate();
-        }
-        catch (SQLException e) {
-            throw e;
         } finally {
             conn.close();
         }
     }
 
-    private boolean cekcCorso(String CFDocente, String NomeCorso) throws SQLException {
+    private boolean ceckCorso(String CFDocente, String NomeCorso) throws SQLException {
         String sqlCheck = "SELECT 1 FROM Tiene WHERE CFDocente = ? AND NomeCorso = ?";
         Connection conn = DatabaseManager.getInstance().getConnection();
 
@@ -147,8 +139,6 @@ public class DocenteFacade {
                 return false;
             }
 
-        } catch (SQLException e){
-            throw e;
         } finally {
             conn.close();
         }

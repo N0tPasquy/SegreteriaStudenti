@@ -18,26 +18,21 @@ public class StudenteFacade {
      */
     public String vediPianoStudi(String Matricola) throws SQLException {
         String sql = "SELECT C.Nome, C.CFU, C.Anno FROM DeveSeguire D JOIN Corso C ON D.NomeCorso = C.Nome WHERE D.MatricolaStudente = ?";
-        Connection conn = DatabaseManager.getInstance().getConnection();
-        StringBuilder Risultato = new StringBuilder();
 
-        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseManager.getInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            StringBuilder Risultato = new StringBuilder();
             stmt.setString(1, Matricola);
             ResultSet rs = stmt.executeQuery();
 
-            while(rs.next()){
+            while (rs.next()) {
                 Risultato.append("- ").append(rs.getString("Nome")).append(" (").append(rs.getInt("CFU")).append(" CFU, Anno ").append(rs.getInt("Anno")).append(")\n");
             }
 
-            if(Risultato.length() > 0){
+            if (!Risultato.isEmpty()) { // Se diverso da vuoto
                 return Risultato.toString();
             } else {
                 return "Nessun corso presente nel piano di studi.";
             }
-        } catch (SQLException e) {
-            return "Errore caricamento piano di studi: " + e.getMessage();
-        } finally {
-            conn.close();
         }
     }
 
@@ -52,10 +47,8 @@ public class StudenteFacade {
                 "JOIN DeveSeguire D ON A.NomeCorso = D.NomeCorso " +
                 "WHERE D.MatricolaStudente = ?";
 
-        Connection conn = DatabaseManager.getInstance().getConnection();
-        StringBuilder Risultato = new StringBuilder();
-
-        try {
+        try (Connection conn = DatabaseManager.getInstance().getConnection()) {
+            StringBuilder Risultato = new StringBuilder();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, Matricola);
             ResultSet rs = stmt.executeQuery();
@@ -73,8 +66,6 @@ public class StudenteFacade {
 
             return Risultato.toString();
 
-        } finally {
-            conn.close();
         }
     }
 
@@ -88,24 +79,20 @@ public class StudenteFacade {
         String sql = "SELECT NomeCorso, Voto, Lode FROM Esito WHERE Matricola = ? AND Stato = 'In Attesa'";
         StringBuilder Risultato = new StringBuilder();
 
-        Connection conn = DatabaseManager.getInstance().getConnection();
-
-        try(PreparedStatement stmt = conn.prepareStatement(sql)){
+        try (Connection conn = DatabaseManager.getInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, Matricola);
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
                 String Lode = "";
-                if(rs.getInt("Lode") == 1){ // Se c'e' lode allora la aggiungo alla stringa
+                if (rs.getInt("Lode") == 1) { // Se c'e' lode allora la aggiungo alla stringa
                     Lode = " e lode";
                 }
                 Risultato.append("- Esame: ").append(rs.getString("NomeCorso")).append(" | Voto: ").append(rs.getInt("Voto")).append(Lode).append(".\n");
             }
             return Risultato.toString();
-        } catch (SQLException e){
-            return "Non ci sono voti in attesa di essere accettati.";
-        } finally {
-            conn.close();
+        } catch (SQLException e) {
+            return "Non ci sono voti in attesa di essere accettati.\n" + e.getMessage();
         }
     }
 
@@ -117,15 +104,14 @@ public class StudenteFacade {
      * @throws SQLException se il corso non è nel piano, l'appello non esiste o errore DB
      */
     public void prenotaAppello(String Matricola, String NomeCorso, String DataAppello) throws SQLException {
-        Connection conn = DatabaseManager.getInstance().getConnection();
 
-        try {
-            // Controllo se il corso  e' nel piano di studi dello studente
+        try (Connection conn = DatabaseManager.getInstance().getConnection()) {
+            // Controllo se il corso e' nel piano di studi dello studente
             String sqlPiano = "SELECT NomeCorso FROM DeveSeguire WHERE MatricolaStudente = ? AND NomeCorso = ?";
             PreparedStatement stmtPiano = conn.prepareStatement(sqlPiano);
             stmtPiano.setString(1, Matricola);
             stmtPiano.setString(2, NomeCorso);
-            if(!stmtPiano.executeQuery().next()){
+            if (!stmtPiano.executeQuery().next()) {
                 throw new SQLException("Errore: Il corso non e' presente nel tuo piano di studi.");
             }
             stmtPiano.close();
@@ -135,7 +121,7 @@ public class StudenteFacade {
             PreparedStatement stmtAppello = conn.prepareStatement(sqlAppello);
             stmtAppello.setString(1, NomeCorso);
             stmtAppello.setString(2, DataAppello);
-            if(!stmtAppello.executeQuery().next()){
+            if (!stmtAppello.executeQuery().next()) {
                 throw new SQLException("Errore: Non esiste alcun appello nella data selezionata.");
             }
             stmtAppello.close();
@@ -148,8 +134,6 @@ public class StudenteFacade {
             stmt.setString(3, DataAppello);
             stmt.execute();
             stmt.close();
-        } finally {
-            conn.close();
         }
     }
 
@@ -170,9 +154,7 @@ public class StudenteFacade {
             nuovoStato = "Rifiutato";
         }
 
-        Connection conn = DatabaseManager.getInstance().getConnection();
-
-        try {
+        try (Connection conn = DatabaseManager.getInstance().getConnection()) {
             PreparedStatement stmtSelect = conn.prepareStatement(sqlSelect);
             stmtSelect.setString(1, nomeCorso);
             stmtSelect.setString(2, matricola);
@@ -206,8 +188,6 @@ public class StudenteFacade {
 
             return "Voto di " + nomeCorso + "\n" + esito + " con successo!";
 
-        } finally {
-            conn.close();
         }
     }
 }

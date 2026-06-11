@@ -52,7 +52,7 @@ public class InserisciVotoController {
         boolean assente = Assente.isSelected();
         boolean lode = Lode.isSelected();
 
-        if(matricola == null || corso == null || data == null){
+        if(matricola.trim().isEmpty() || corso.trim().isEmpty() || data == null){
             mostraErrore("Compila tutti i campi.");
             return;
         }
@@ -62,7 +62,7 @@ public class InserisciVotoController {
         // Controllo se "Assente" è spuntato
         if (!assente){
             // Se "Assente" non è spuntata allora deve esserci un voto
-            if(voto == null){
+            if(voto.trim().isEmpty()){
                 mostraErrore("Inserisci un voto.");
                 return;
             }
@@ -96,7 +96,7 @@ public class InserisciVotoController {
             // Se lo studente risulta assente, anche se il docente inserisce per sbaglio un voto, il backend lo capisce
             // e ignora del tutto il voto, inserendo null come valore.
             if(assente){
-                String Messaggio = "Studente registrato come assente,\nvoto ingorato.";
+                String Messaggio = "Studente registrato come assente,\nvoto ignorato.";
                 mostraSuccesso(Messaggio);
             }else {
                 String Messaggio = "Voto inserito correttamente.";

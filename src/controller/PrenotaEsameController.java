@@ -45,7 +45,7 @@ public class PrenotaEsameController {
         String Corso = NomeCorso.getText();
         LocalDate Data = DataEsame.getValue();
 
-        if(Corso == null || Data == null){
+        if(Corso.trim().isEmpty() || Data == null){
             mostraErrore("Compila tutti i campi");
             return;
         }
