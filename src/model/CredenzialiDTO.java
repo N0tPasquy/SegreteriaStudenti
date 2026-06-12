@@ -4,9 +4,9 @@ package model;
  * Data Transfer Object per le credenziali di login.
  */
 public class CredenzialiDTO {
-    private String Username;
-    private String PasswordDB;
-    private String Ruolo;   // "SEGRETERIA", "DOCENTE", "STUDENTE"
+    private final String Username;
+    private final String PasswordDB;
+    private final String Ruolo;   // "SEGRETERIA", "DOCENTE", "STUDENTE"
 
     /**
      * Costruttore.
