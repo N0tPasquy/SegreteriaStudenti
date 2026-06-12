@@ -79,7 +79,8 @@ public class StudenteFacade {
         String sql = "SELECT NomeCorso, Voto, Lode FROM Esito WHERE Matricola = ? AND Stato = 'In Attesa'";
         StringBuilder Risultato = new StringBuilder();
 
-        try (Connection conn = DatabaseManager.getInstance().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseManager.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, Matricola);
             ResultSet rs = stmt.executeQuery();
 
@@ -88,7 +89,8 @@ public class StudenteFacade {
                 if (rs.getInt("Lode") == 1) { // Se c'e' lode allora la aggiungo alla stringa
                     Lode = " e lode";
                 }
-                Risultato.append("- Esame: ").append(rs.getString("NomeCorso")).append(" | Voto: ").append(rs.getInt("Voto")).append(Lode).append(".\n");
+                Risultato.append("- Esame: ").append(rs.getString("NomeCorso")).append(" | Voto: ")
+                        .append(rs.getInt("Voto")).append(Lode).append(".\n");
             }
             return Risultato.toString();
         } catch (SQLException e) {
