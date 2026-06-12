@@ -68,7 +68,8 @@ public class DocenteFacade {
             try (ResultSet rs = stmt.executeQuery()) {
                 // Fin quando ci sono risultati costruisco la stringa
                 while (rs.next()) {
-                    Risultati.append("- ").append(rs.getString("Nome")).append(" ").append(rs.getString("Cognome")).append(" (Matricola: ").append(rs.getString("Matricola")).append(")\n");
+                    Risultati.append("- ").append(rs.getString("Nome")).append(" ").append(rs.getString("Cognome"))
+                            .append(" (Matricola: ").append(rs.getString("Matricola")).append(")\n");
                 }
             }
         } finally {
