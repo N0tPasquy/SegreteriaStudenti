@@ -11,7 +11,7 @@ public class CredenzialiDTO {
     /**
      * Costruttore.
      * @param Username username (matricola/CF/ID)
-     * @param PasswordDB password in chiaro nel DB
+     * @param PasswordDB password salvata nel DB
      * @param Ruolo ruolo dell'utente
      */
     public CredenzialiDTO(String Username, String PasswordDB, String Ruolo) {
