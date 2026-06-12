@@ -129,7 +129,8 @@ public class SegreteriaFacade {
 
             // In questo ciclo "costruisco" la stringa finale che verrà mostrata nella TextArea
             while (rs.next()){
-                risultati.append("- Esame: ").append(rs.getString("NomeCorso")).append(" | Voto: ").append(rs.getString("Voto")).append("\n");
+                risultati.append("- Esame: ").append(rs.getString("NomeCorso")).append(" | Voto: ")
+                        .append(rs.getString("Voto")).append("\n");
             }
         }
 
